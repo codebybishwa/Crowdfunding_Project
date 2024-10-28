@@ -1,0 +1,97 @@
+/* src/components/NavbarSection/NavbarSection.css */
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #34495e; /* Dark blue background */
+  padding: 15px 30px; /* Padding around navbar */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Slight shadow for depth */
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar-logo {
+  font-size: 26px; /* Increased font size for the logo */
+  color: #ecf0f1; /* Light color for logo */
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.navbar-logo:hover {
+  color: #e74c3c; /* Logo color change on hover */
+}
+
+.navbar-links {
+  list-style: none; /* Remove default list styling */
+  display: flex;
+  gap: 30px; /* Space between links */
+}
+
+.navbar-links a {
+  text-decoration: none; /* Remove underline */
+  color: #bdc3c7; /* Link color */
+  font-size: 18px;
+  padding: 8px 12px; /* Spacing around links */
+  border-radius: 5px; /* Rounded corners */
+  transition: background-color 0.3s, color 0.3s; /* Smooth transitions */
+}
+
+.navbar-links a:hover {
+  background-color: #e74c3c; /* Background color on hover */
+  color: white; /* Text color on hover */
+}
+
+.dropdown {
+  position: relative; /* Position relative for dropdown */
+  cursor: pointer; /* Cursor change on hover */
+  color: #bdc3c7; /* Same color for dropdown */
+}
+
+.dropdown-arrow {
+  margin-left: 5px; /* Space between text and arrow */
+  transition: transform 0.3s; /* Smooth transition for arrow */
+}
+
+.dropdown-arrow.open {
+  transform: rotate(180deg); /* Rotate arrow when dropdown is open */
+}
+
+.dropdown-menu {
+  position: absolute; /* Position dropdown absolutely */
+  top: 100%; /* Aligns below the dropdown */
+  left: 0; /* Aligns to the left */
+  background-color: #34495e; /* Matches navbar background */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Shadow for dropdown */
+  border-radius: 5px; /* Rounded corners */
+  z-index: 1000; /* Keep dropdown above other content */
+  padding: 10px 0; /* Padding around dropdown */
+}
+
+.dropdown-menu li {
+  padding: 5px 15px; /* Spacing for dropdown items */
+}
+
+.dropdown-menu a {
+  color: #bdc3c7; /* Link color in dropdown */
+  transition: background-color 0.3s; /* Smooth transitions */
+}
+
+.dropdown-menu a:hover {
+  background-color: #e74c3c; /* Background color on hover */
+  color: white; /* Text color on hover */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column; /* Stack elements vertically */
+    align-items: flex-start; /* Align to the start */
+  }
+
+  .navbar-links {
+    flex-direction: column; /* Stack links vertically */
+    gap: 10px; /* Reduced gap for vertical spacing */
+  }
+}

@@ -1,0 +1,74 @@
+.featured-projects {
+    padding: 60px 20px;
+    text-align: center;
+    background: #f8f9fa; /* Light background for contrast */
+}
+
+h2 {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    color: #333;
+}
+
+.project-cards {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.project-card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 15px; /* More rounded corners */
+    padding: 30px; /* Increased padding for a larger card */
+    margin: 20px; /* Increased margin for better spacing */
+    width: 320px; /* Slightly increased width */
+    text-align: left;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transition for hover effects */
+}
+
+.project-card:hover {
+    transform: translateY(-5px); /* Lift effect on hover */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); /* Deeper shadow on hover */
+}
+
+.project-card img {
+    max-width: 100%;
+    border-radius: 10px; /* Rounded corners for images */
+    margin-bottom: 15px;
+}
+
+.project-card h3 {
+    margin-bottom: 10px; /* Increased space below the title */
+}
+
+.project-card p {
+    margin-bottom: 15px; /* Increased space below the paragraph */
+}
+
+.progress-bar {
+    background: #f3f3f3;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+.progress {
+    background: linear-gradient(90deg, #4CAF50, #81C784); /* Gradient for the progress bar */
+    height: 10px;
+    border-radius: 5px;
+}
+
+.btn {
+    background: #007bff; /* Bootstrap primary color */
+    color: white;
+    padding: 12px 20px;
+    text-decoration: none;
+    border-radius: 25px; /* More rounded button */
+    transition: background 0.3s ease;
+    display: inline-block; /* Ensure button takes the full width */
+}
+
+.btn:hover {
+    background: #0056b3; /* Darker shade on hover */
+}

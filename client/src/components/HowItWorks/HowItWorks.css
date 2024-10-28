@@ -1,0 +1,49 @@
+.how-it-works {
+    padding: 60px 20px;
+    text-align: center;
+    background: #f8f9fa; /* Light background for contrast */
+}
+
+h2 {
+    font-size: 2.5rem; /* Larger font size for the heading */
+    margin-bottom: 40px;
+    color: #333; /* Dark color for the heading */
+    font-weight: bold; /* Bold for emphasis */
+}
+
+.steps {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 1200px; /* Limit the width of the steps container */
+    margin: 0 auto; /* Center the container */
+    gap: 20px; /* Space between steps */
+}
+
+.step {
+    background: white; /* White background for the steps */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    padding: 30px; /* Ample padding for content */
+    margin: 10px; /* Consistent margin for better alignment */
+    flex: 1; /* Allow the steps to grow */
+    min-width: 250px; /* Minimum width for responsive design */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transition effects */
+}
+
+.step:hover {
+    transform: translateY(-5px); /* Lift effect on hover */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); /* Deeper shadow on hover */
+}
+
+.step h3 {
+    color: #4A90E2; /* Blue color for headings */
+    font-size: 1.5rem; /* Larger font size for step titles */
+    margin-bottom: 10px; /* Space below title */
+}
+
+.step p {
+    font-size: 1rem; /* Base font size for descriptions */
+    color: #555; /* Grey color for text */
+    line-height: 1.5; /* Improved line height for readability */
+}
