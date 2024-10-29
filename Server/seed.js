@@ -100,4 +100,4 @@ const seedDatabase = async () => {
 
 // Execute the seed function
 
-seedDatabase();
+// seedDatabase();
