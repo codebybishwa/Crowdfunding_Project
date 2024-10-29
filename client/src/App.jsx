@@ -6,6 +6,7 @@ import NavbarSection from "./components/NavbarSection/NavbarSection";
 import ProjectList from "./pages/ProjectList/ProjectList";
 import Footer from "./components/Footer/Footer";
 import ProjectDetail from "./pages/ProjectDetails/ProjectDetails";
+import UserPage from "./pages/UserSection/UserPage";
 
 function App() {
   return (
@@ -16,6 +17,8 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/projects" element={<ProjectList />} />
           <Route path="/projects/:id" element={<ProjectDetail />} />
+          <Route path="/profile" element={<UserPage />} />
+          <Route path="/profile/projects/:id" element={<ProjectDetail />} />
           {/* 
           <Route path="/contact" element={<Contact />} />
           

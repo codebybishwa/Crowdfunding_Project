@@ -10,7 +10,7 @@ const NavbarSection = () => {
       <ul className="navbar-links">
         <li><Link to="/">Home</Link></li>
         <li><Link to="/projects">Projects</Link></li>
-        <li><Link to="/contact">Contacts</Link></li>
+        <li><Link to="/profile">Profile</Link></li>
         <li><Link to="/register">Register</Link></li> {/* Register page */}
       </ul>
     </nav>

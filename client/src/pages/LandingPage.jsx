@@ -13,7 +13,7 @@ const LandingPage = () => {
       <FeaturedProject />
       <HowItWorks />
       <PlatformFeatures />
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

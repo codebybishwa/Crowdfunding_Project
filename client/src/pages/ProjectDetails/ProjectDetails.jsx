@@ -37,6 +37,16 @@ const ProjectDetail = () => {
       funders: ['David Brown', 'Emma Wilson'],
       documentation: ['sports-plan.pdf', 'sports-image.jpg'],
     },
+    {
+      id: 4,
+      name: 'Youth Sports Equipment',
+      description: 'Providing sports equipment for underprivileged youth.',
+      image: 'https://via.placeholder.com/300', 
+      requiredAmount: 8000,
+      currentAmount: 2000,
+      funders: ['David Brown', 'Emma Wilson'],
+      documentation: ['sports-plan.pdf', 'sports-image.jpg'],
+    }
   ];
 
   
