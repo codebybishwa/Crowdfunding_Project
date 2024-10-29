@@ -9,6 +9,7 @@ import ProjectDetail from "./pages/ProjectDetails/ProjectDetails";
 import UserPage from "./pages/UserSection/UserPage";
 import Login from "./pages/Login/Login";
 import SignUp from "./pages/SignUp/SignUp";
+import ProjectDetailEdit from "./pages/ProjectDetailsEdit/ProjectDetailsEdit";
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
           <Route path="/projects" element={<ProjectList />} />
           <Route path="/projects/:id" element={<ProjectDetail />} />
           <Route path="/profile" element={<UserPage />} />
-          <Route path="/profile/projects/:id" element={<ProjectDetail />} />
+          <Route path="/projects/:id/edit" element={<ProjectDetailEdit />} />
           <Route path="/login" element={<Login />}/>
           <Route path="/register" element={<SignUp />}/>
           {/* 

@@ -1,58 +1,50 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
-import './ProjectDetails.css';
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
+import "./ProjectDetails.css";
 
 const ProjectDetail = () => {
   const { id } = useParams();
-  const projectId = parseInt(id); 
+  const navigate = useNavigate();
+  const [project, setProject] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const projects = [
-    {
-      id: 1,
-      name: 'Community Garden',
-      description: 'Help us grow fresh produce for local families.',
-      image: 'https://via.placeholder.com/300', 
-      requiredAmount: 5000,
-      currentAmount: 3000,
-      funders: ['Alice Johnson', 'Bob Smith'],
-      documentation: ['garden-plan.pdf', 'garden-image.jpg'],
-    },
-    {
-      id: 2,
-      name: 'Library Expansion',
-      description: 'Expanding the community library.',
-      image: 'https://via.placeholder.com/300', 
-      requiredAmount: 12000,
-      currentAmount: 8000,
-      funders: ['Charlie Davis'],
-      documentation: ['library-plan.pdf', 'library-image.jpg'],
-    },
-    {
-      id: 3,
-      name: 'Youth Sports Equipment',
-      description: 'Providing sports equipment for underprivileged youth.',
-      image: 'https://via.placeholder.com/300', 
-      requiredAmount: 8000,
-      currentAmount: 2000,
-      funders: ['David Brown', 'Emma Wilson'],
-      documentation: ['sports-plan.pdf', 'sports-image.jpg'],
-    },
-    {
-      id: 4,
-      name: 'Youth Sports Equipment',
-      description: 'Providing sports equipment for underprivileged youth.',
-      image: 'https://via.placeholder.com/300', 
-      requiredAmount: 8000,
-      currentAmount: 2000,
-      funders: ['David Brown', 'Emma Wilson'],
-      documentation: ['sports-plan.pdf', 'sports-image.jpg'],
+  useEffect(() => {
+    const fetchProject = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/projects/${id}`
+        );
+        setProject(response.data);
+      } catch (error) {
+        console.error("Error fetching project:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProject();
+  }, [id]);
+
+  const handleDelete = async () => {
+    if (window.confirm("Are you sure you want to delete this project?")) {
+      try {
+        const response = await axios.delete(
+          `http://localhost:3000/projects/${id}`
+        );
+        console.log("Delete response:", response.data); // Log the response
+        navigate("/projects"); // Redirect to the projects list
+      } catch (error) {
+        console.error("Error deleting project:", error);
+        // Optionally, show an alert or a message to the user
+        alert("Failed to delete the project.");
+      }
     }
-  ];
+  };
 
-  
-  const project = projects.find((p) => p.id === projectId);
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
-  
   if (!project) {
     return <div>Project not found.</div>;
   }
@@ -62,7 +54,11 @@ const ProjectDetail = () => {
   return (
     <div className="project-detail">
       <h1>{project.name}</h1>
-      <img src={project.image} alt={project.name} className="project-detail-image" /> {/* Project image */}
+      <img
+        src={project.image}
+        alt={project.name}
+        className="project-detail-image"
+      />
       <p className="project-description">{project.description}</p>
 
       <div className="project-info">
@@ -78,9 +74,10 @@ const ProjectDetail = () => {
         <div className="funders">
           <h3>Funders</h3>
           <ul>
-            {project.funders.map((funder, index) => (
-              <li key={index}>{funder}</li>
-            ))}
+            {project.funders &&
+              project.funders.map((funder) => (
+                <li key={funder._id}>{funder.name}</li>
+              ))}
           </ul>
         </div>
 
@@ -89,12 +86,28 @@ const ProjectDetail = () => {
           <ul>
             {project.documentation.map((doc, index) => (
               <li key={index}>
-                <a href={`path/to/${doc}`} target="_blank" rel="noopener noreferrer">
+                <a
+                  href={`path/to/${doc}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   {doc}
                 </a>
               </li>
             ))}
           </ul>
+        </div>
+
+        <div className="project-actions">
+          <button
+            className="edit-button"
+            onClick={() => navigate(`/projects/${id}/edit`)}
+          >
+            Edit
+          </button>
+          <button className="delete-button" onClick={handleDelete}>
+            Delete
+          </button>
         </div>
       </div>
     </div>

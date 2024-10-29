@@ -80,7 +80,7 @@ const UserPage = () => {
                 <p>
                   <strong>Funders:</strong> {project.funders.join(', ')}
                 </p>
-                <Link to={`/profile/projects/${project.id}`} className="project-link">
+                <Link to={`/projects/${project.id}`} className="project-link">
                   View Details
                 </Link>
               </div>
@@ -105,7 +105,7 @@ const UserPage = () => {
                 <p>
                   <strong>Funders:</strong> {project.funders.join(', ')}
                 </p>
-                <Link to={`/profile/projects/${project.id}`} className="project-link">
+                <Link to={`/projects/${project.id}`} className="project-link">
                   View Details
                 </Link>
               </div>

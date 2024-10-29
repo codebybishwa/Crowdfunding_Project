@@ -6,8 +6,15 @@
 }
 
 html, body {
+    height: 100%; /* Ensure body takes full height */
+    display: flex; /* Use Flexbox layout */
+    flex-direction: column; /* Stack items vertically */
     width: 100%; /* Ensure body does not exceed the viewport */
     overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+body {
+    flex: 1; /* Allow body to take available height */
 }
 
 .footer {
@@ -15,6 +22,9 @@ html, body {
     color: white;
     padding: 40px 20px;
     text-align: center;
+    /* Make footer fixed to bottom */
+    position: relative; /* Changed from absolute to relative */
+    width: 100%; /* Full width of the viewport */
 }
 
 .footer-content {
