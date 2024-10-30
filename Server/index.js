@@ -1,180 +1,168 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const cors = require("cors");
-const bcrypt = require("bcryptjs"); // Make sure bcrypt is required
-const User = require("./models/User"); // Import the User model
-require("dotenv").config(); // Load environment variables
-
 const app = express();
+require("dotenv").config();
+const User = require('./models/User');
+const Project = require('./models/Project');
+const cors = require("cors");
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const authenticateToken = require('./middleware/authenticateToken')
 
-// Connect to MongoDB using environment variable from .env file
-mongoose.connect(process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log("Database Connected"))
-  .catch((e) => console.log("Error: ", e.message));
+mongoose.connect(process.env.DB_URL)
+  .then(() => {
+    console.log("Database Connected");
+  })
+  .catch((e) => {
+    console.log("Error : ", e);
+  })
 
-// Middleware
-app.use(cors({ origin: "http://localhost:5173" })); // Ensure it matches frontend URL
+app.use(cors({ origin: "http://localhost:5173" }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Test route to confirm server is running
-app.get("/", (req, res) => res.send("Hello from the backend"));
+app.get('/', async (req, res) => {
+  res.send("hello");
+});
 
-// Signup route to handle user registration
-app.post("/api/auth/signup", async (req, res) => {
+app.get('/profile', authenticateToken, async (req, res) => {
   try {
-    const { fullName, username, password, confirmPassword, gender } = req.body;
-
-    // Validate passwords
-    if (password !== confirmPassword) {
-      return res.status(400).json({ error: "Passwords don't match" });
-    }
-
-    // Check if the username is already in use
-    const userExists = await User.findOne({ username });
-    if (userExists) {
-      return res.status(400).json({ error: "Username already exists" });
-    }
-
-    // Hash the password before saving
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-
-    // Create a new user in MongoDB
-    const newUser = new User({
-      fullName,
-      username,
-      password: hashedPassword, // Store the hashed password
-      gender,
-    });
-
-    // Save the new user to the database
-    await newUser.save();
-
-    // Return user info (excluding the password)
-    res.status(201).json({
-      _id: newUser._id,
-      fullName: newUser.fullName,
-      username: newUser.username,
-    });
+    const user = await User.findById(req.user.id) // Populate the projects field
+      .populate('createdProjects')  // Populate the createdProjects field
+      .populate('donatedProjects');  // Populate the donatedProjects field
+    if (!user) return res.sendStatus(404);
+    res.json(user); // Send user data
   } catch (error) {
-    console.error("Error in signup route:", error.message);
-    res.status(500).json({ error: "Internal Server Error" });
+    console.error("Error fetching user data:", error);
+    res.sendStatus(500);
   }
 });
 
-// Start the server on the specified PORT
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+app.post('/register', async (req, res) => {
+  try {
 
+    const { fullName, username, password, email, PhnNo, confirmPassword } = req.body;
 
+    if (password !== confirmPassword) {
+      return res.status(400).json({ message: 'Passwords does not match' });
+    }
+    // Check if user exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser)
+      return res.status(400).json({ message: 'User already exists' });
 
+    // Hash the password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
 
+    // Create new user
+    const newUser = new User({ fullName, username, email, PhnNo, password: hashedPassword });
+    await newUser.save();
 
+    res.status(201).json({ message: 'User registered successfully' });
+  } catch (error) {
+    console.log("hi");
+    res.status(500).json({ message: 'Server error' });
+  }
+})
 
-// const express = require("express");
-// const mongoose = require("mongoose");
-// const app = express();
-// require("dotenv").config();
-// const User = require('./models/User');
-// const Project = require('./models/Project');
-// const cors = require("cors");
+// Login Route
+app.post('/login', async (req, res) => {
+  try {
+    const { email, password } = req.body;
 
-// mongoose.connect(process.env.DB_URL)
-//     .then(() => {
-//         console.log("Database Connected");
-//     })
-//     .catch((e) => {
-//         console.log("Error : ", e);
-//     })
+    // Find user by email
+    const user = await User.findOne({ email });
+    if (!user) return res.status(400).json({ message: 'Invalid credentials' });
+    console.log(user);
+    // Check password
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
+    console.log(isMatch);
+    // Generate JWT
+    const exp = Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7; // 7 days from now in seconds
+    const token = jwt.sign({ sub: user._id, exp }, process.env.JWT_SECRET);
+    console.log(token, process.env.JWT_SECRET);
+    // Send token and user info (excluding password)
+    res.json({
+      message: 'Logged in successfully',
+      token,
+      user: { id: user._id, email: user.email, name: user.username } // Add other non-sensitive user fields as needed
+    });
+  } catch (error) {
+    console.error("Login error:", error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
 
-// app.use(cors({ origin: "http://localhost:5173" }));
-// app.use(express.json());
-// app.use(express.urlencoded({extended:true}));
+app.get('/projects', async (req, res) => {
+  const data = await Project.find().populate('owner', 'username');
+  res.send(data);
+});
 
-// app.get('/' , async (req, res) => {
-//     res.send("hello");
-// });
+app.post('/projects', authenticateToken, async (req, res) => {
+  try {
+    const { name, description, image, requiredAmount, documentation, createdAt } = req.body; // Include createdAt if sending from the body
+    const data = await Project.create({
+      name,
+      description,
+      image,
+      requiredAmount,
+      documentation,
+      owner : req.user.id,
+      createdAt: createdAt || Date.now() // Use createdAt from body or default to current date
+    });
 
-// app.get('/user', async (req, res) => {
-//     const data = await User.find();
-//     res.send(data);
-// });
+    // Update the user's created projects array
+    await User.findByIdAndUpdate(req.user.id, { $push: { createdProjects: data._id } }); // Add the project ID to user's created array
 
-// app.post('/user', async (req, res) => {
-//     const { name, PhnNo, email, bio } = req.body;
-//     const data = await User.create({
-//         name, PhnNo, email, bio
-//     });
+    res.status(201).json(data); // Respond with the created project
 
-//     console.log(data);
-// });
+  } catch (error) {
+    console.log(error);
+  }
+});
 
-// app.get('/projects', async (req, res) => {
-//     const data = await Project.find().populate('owner', 'name');
-//     res.send(data);
-// });
+app.get('/projects/:id', authenticateToken, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const project = await Project.findById(id)
+      .populate('owner', 'username email')    // Populate owner details
+      .populate('funders', 'username'); // Populate funders details
 
-// app.post('/projects', async (req, res) => {
-//     try {
-//         const { name, description, image, requiredAmount, documentation, owner, createdAt } = req.body; // Include createdAt if sending from the body
+    // console.log(project);
+    res.send(project);
+  } catch (error) {
+    console.log(error);
+  }
+});
 
-//         const data = await Project.create({
-//             name,
-//             description,
-//             image,
-//             requiredAmount,
-//             documentation,
-//             owner,
-//             createdAt: createdAt || Date.now() // Use createdAt from body or default to current date
-//         });
+app.put('/projects/:id', authenticateToken, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, description, image, requiredAmount, documentation } = req.body;
+    const project = await Project.findByIdAndUpdate(id, {
+      name, description, image, requiredAmount, documentation
+    })
+    // console.log(project);
+    res.json({ project })
+  } catch (error) {
+    console.log(error);
+  }
+});
 
-//         res.send(data);
-//     } catch (error) {
-//         console.log(error);
-//     }
-// });
+app.delete('/projects/:id', authenticateToken, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedProject = await Project.findByIdAndDelete(id);
 
-// app.get('/projects/:id', async (req, res) => {
-//     try {
-//         const { id } = req.params;
-//         const project = await Project.findById(id)
-//             .populate('owner', 'name email')    // Populate owner details
-//             .populate('funders', 'name'); // Populate funders details
+    res.json({ message: "Project deleted successfully", deletedProject });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
 
-//         // console.log(project);
-//         res.send(project);
-//     } catch (error) {
-//         console.log(error);
-//     }
-// });
-
-// app.put('/projects/:id', async (req, res) => {
-//     try {
-//         const { id } = req.params;
-//         const { name, description, image, requiredAmount, documentation } = req.body;
-//         const project = await Project.findByIdAndUpdate(id, {
-//             name, description, image, requiredAmount, documentation
-//         })
-//         // console.log(project);
-//         res.json({project})
-//     } catch (error) {
-//         console.log(error);
-//     }
-// });
-
-// app.delete('/projects/:id', async (req, res) => {
-//     try {
-//         const { id } = req.params;
-//         const deletedProject = await Project.findByIdAndDelete(id);
-
-//         res.json({ message: "Project deleted successfully", deletedProject });
-//     } catch (error) {
-//         console.error(error);
-//         res.status(500).json({ message: "Server error" });
-//     }
-// });
-
-// app.listen(process.env.PORT, () => {
-//     console.log("Listening on Port Number 3000");
-// });
+app.listen(process.env.PORT, () => {
+  console.log("Listening on Port Number 3000");
+});

@@ -16,10 +16,24 @@ const ProjectDetailEdit = () => {
     documentation: [],
   });
 
+  // Check if the user is authenticated
+  useEffect(() => {
+    const token = localStorage.getItem('token'); // Adjust based on your storage choice
+    if (!token) {
+      navigate('/login'); // Redirect to login if not authenticated
+    }
+  }, [navigate]);
+
   useEffect(() => {
     const fetchProject = async () => {
+      const token = localStorage.getItem('token'); // Retrieve the token again
+
       try {
-        const response = await axios.get(`http://localhost:3000/projects/${id}`);
+        const response = await axios.get(`http://localhost:3000/projects/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Include token in headers
+          },
+        });
         setProject(response.data);
         setProjectDetails({
           name: response.data.name,
@@ -34,6 +48,7 @@ const ProjectDetailEdit = () => {
         setLoading(false);
       }
     };
+
     fetchProject();
   }, [id]);
 
@@ -49,8 +64,14 @@ const ProjectDetailEdit = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const token = localStorage.getItem('token'); // Retrieve the token again
+
     try {
-      await axios.put(`http://localhost:3000/projects/${id}`, projectDetails);
+      await axios.put(`http://localhost:3000/projects/${id}`, projectDetails, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Include token in headers
+        },
+      });
       console.log("Navigating to:", `/projects/${id}`);
       navigate(`/projects/${id}`); // Redirect back to project details
     } catch (error) {

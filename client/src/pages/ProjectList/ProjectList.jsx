@@ -19,6 +19,7 @@ const ProjectList = () => {
         const response = await axios.get("http://localhost:3000/projects");
         // console.log(response);
         setProjects(response.data);
+        console.log(localStorage);
       } catch (error) {
         console.error("Error fetching projects:", error);
       }
@@ -36,7 +37,7 @@ const ProjectList = () => {
             <div className="project-details">
               <h2>{project.name}</h2>
               <p className="project-description">{project.description}</p>
-              <p><strong>Creator:</strong> {project.owner ? capitalizeFirstLetter(project.owner.name) : "Unknown"}</p>
+              <p><strong>Creator:</strong> {project.owner ? capitalizeFirstLetter(project.owner.username) : "Unknown"}</p>
               <p><strong>Required Amount:</strong> ${project.requiredAmount}</p>
               <p><strong>Current Amount:</strong> ${project.currentAmount}</p>
               <Link to={`/projects/${project._id}`} className="project-link">View Details</Link>

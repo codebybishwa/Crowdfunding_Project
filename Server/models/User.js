@@ -17,12 +17,18 @@ const UserSchema = new Schema({
         required: true,
         minlength: 6,
     },
-
-
-    // name : String,
-    PhnNo : String,
-    email: String,
-    bio : String,
+    PhnNo : {
+        type : String,
+        required : true
+    },
+    email: {
+        type : String,
+        required : true
+    },
+    bio : {
+        type : String,
+        default : "",
+    },
     createdProjects: [{ type: Types.ObjectId, ref: 'Project' }], // Array of Project IDs the user created
     donatedProjects: [{ type: Types.ObjectId, ref: 'Project' }]  // Array of Project IDs the user donated to
 })

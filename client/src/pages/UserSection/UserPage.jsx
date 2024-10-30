@@ -1,116 +1,112 @@
 // src/components/UserPage/UserPage.jsx
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './UserPage.css';
 
 const UserPage = () => {
-  const user = {
-    name: 'John Doe',
-    email: 'johndoe@example.com',
-    bio: 'Passionate about community development and sustainable projects.',
-  };
+  const [user, setUser] = useState(null);
+  const [projectsCreated, setProjectsCreated] = useState([]);
+  const [donatedProjects, setDonatedProjects] = useState([]);
+  const navigate = useNavigate();
 
-  const projectsCreated = [
-    {
-      id: 1,
-      name: 'Community Garden',
-      description: 'Help us grow fresh produce for local families.',
-      image: 'https://via.placeholder.com/300',
-      requiredAmount: 5000,
-      currentAmount: 3000,
-      funders: ['Alice Johnson', 'Bob Smith'],
-      documentation: ['garden-plan.pdf', 'garden-image.jpg'],
-    },
-    {
-      id: 2,
-      name: 'School Supplies Drive',
-      description: 'Providing essential supplies for underprivileged children.',
-      image: 'https://via.placeholder.com/300',
-      requiredAmount: 7000,
-      currentAmount: 5000,
-      funders: ['Sarah Connor', 'John Wick'],
-      documentation: ['supplies-list.pdf', 'school-event.jpg'],
-    },
-  ];
+  // Check if the user is authenticated
+  useEffect(() => {
+    const token = localStorage.getItem('token'); // Adjust based on your storage choice
+    if (!token) {
+      navigate('/login'); // Redirect to login if not authenticated
+    }
+  }, [navigate]);
 
-  const donatedProjects = [
-    {
-      id: 3,
-      name: 'Clean Water Initiative',
-      description: 'Supporting clean water access in rural areas.',
-      image: 'https://via.placeholder.com/300',
-      requiredAmount: 10000,
-      currentAmount: 8000,
-      funders: ['Emily Rose', 'Clark Kent'],
-      documentation: ['water-plan.pdf', 'village-photo.jpg'],
-    },
-    {
-      id: 4,
-      name: 'Tree Plantation Drive',
-      description: 'Let’s make the world greener by planting trees.',
-      image: 'https://via.placeholder.com/300',
-      requiredAmount: 6000,
-      currentAmount: 4000,
-      funders: ['Bruce Wayne', 'Diana Prince'],
-      documentation: ['plantation-details.pdf', 'event-photo.jpg'],
-    },
-  ];
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const token = localStorage.getItem('token'); // Retrieve token from local storage
+        // Fetch the user information
+        const userResponse = await axios.get(`http://localhost:3000/profile`, {
+          headers: {
+            Authorization: `Bearer ${token}` // Include token in the request header
+          }
+        });
+
+        const userData = userResponse.data;
+        console.log(userData);
+        setUser(userData);
+        setProjectsCreated(userData.createdProjects || []); // Safely set created projects
+        setDonatedProjects(userData.donatedProjects || []); // Safely set donated projects
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, []); // No dependencies needed; it runs once on component mount
+
+  if (!user) {
+    return <div>Loading user data...</div>;
+  }
 
   return (
     <div className="user-section">
       <div className="user-details">
-        <h2>{user.name}</h2>
+        <h2>{user.fullName}</h2>
         <p>{user.email}</p>
         <p>{user.bio}</p>
       </div>
 
       <div className="projects-section">
-        <h3>Projects Created by {user.name}</h3>
+        <h3>Projects Created by {user.fullName}</h3>
         <div className="projects-list">
-          {projectsCreated.map((project) => (
-            <div key={project.id} className="project-card">
-              <img src={project.image} alt={project.name} />
-              <div className="project-info">
-                <h4>{project.name}</h4>
-                <p>{project.description}</p>
-                <p>
-                  <strong>Funds Raised:</strong> ${project.currentAmount} / $
-                  {project.requiredAmount}
-                </p>
-                <p>
-                  <strong>Funders:</strong> {project.funders.join(', ')}
-                </p>
-                <Link to={`/projects/${project.id}`} className="project-link">
-                  View Details
-                </Link>
+          {projectsCreated.length > 0 ? (
+            projectsCreated.map((project) => (
+              <div key={project._id} className="project-card">
+                <img src={project.image || 'https://via.placeholder.com/300'} alt={project.name} />
+                <div className="project-info">
+                  <h4>{project.name}</h4>
+                  <p>{project.description}</p>
+                  <p>
+                    <strong>Funds Raised:</strong> ${project.currentAmount} / ${project.requiredAmount}
+                  </p>
+                  <p>
+                    <strong>Funders:</strong> {project.funders.join(', ')}
+                  </p>
+                  <Link to={`/projects/${project._id}`} className="project-link">
+                    View Details
+                  </Link>
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            <p>No projects created yet.</p>
+          )}
         </div>
       </div>
 
       <div className="donated-section">
-        <h3>Projects {user.name} Donated To</h3>
+        <h3>Projects {user.fullName} Donated To</h3>
         <div className="projects-list">
-          {donatedProjects.map((project) => (
-            <div key={project.id} className="project-card">
-              <img src={project.image} alt={project.name} />
-              <div className="project-info">
-                <h4>{project.name}</h4>
-                <p>{project.description}</p>
-                <p>
-                  <strong>Funds Raised:</strong> ${project.currentAmount} / $
-                  {project.requiredAmount}
-                </p>
-                <p>
-                  <strong>Funders:</strong> {project.funders.join(', ')}
-                </p>
-                <Link to={`/projects/${project.id}`} className="project-link">
-                  View Details
-                </Link>
+          {donatedProjects.length > 0 ? (
+            donatedProjects.map((project) => (
+              <div key={project._id} className="project-card">
+                <img src={project.image || 'https://via.placeholder.com/300'} alt={project.name} />
+                <div className="project-info">
+                  <h4>{project.name}</h4>
+                  <p>{project.description}</p>
+                  <p>
+                    <strong>Funds Raised:</strong> ${project.currentAmount} / ${project.requiredAmount}
+                  </p>
+                  <p>
+                    <strong>Funders:</strong> {project.funders.join(', ')}
+                  </p>
+                  <Link to={`/projects/${project._id}`} className="project-link">
+                    View Details
+                  </Link>
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            <p>No projects donated to yet.</p>
+          )}
         </div>
       </div>
     </div>
