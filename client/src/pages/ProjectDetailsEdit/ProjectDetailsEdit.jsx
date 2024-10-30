@@ -12,13 +12,13 @@ const ProjectDetailEdit = () => {
     name: '',
     description: '',
     image: '',
-    requiredAmount: 0, // Initialize as a number
+    requiredAmount: 0,
     documentation: [],
   });
 
   // Check if the user is authenticated
   useEffect(() => {
-    const token = localStorage.getItem('token'); // Adjust based on your storage choice
+    const token = localStorage.getItem('token');
     if (!token) {
       navigate('/login'); // Redirect to login if not authenticated
     }
@@ -26,12 +26,11 @@ const ProjectDetailEdit = () => {
 
   useEffect(() => {
     const fetchProject = async () => {
-      const token = localStorage.getItem('token'); // Retrieve the token again
-
+      const token = localStorage.getItem('token');
       try {
         const response = await axios.get(`http://localhost:3000/projects/${id}`, {
           headers: {
-            Authorization: `Bearer ${token}`, // Include token in headers
+            Authorization: `Bearer ${token}`,
           },
         });
         setProject(response.data);
@@ -54,7 +53,7 @@ const ProjectDetailEdit = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    const newValue = name === 'requiredAmount' ? Number(value) : value; // Convert to number if it's requiredAmount
+    const newValue = name === 'requiredAmount' ? Number(value) : value;
 
     setProjectDetails((prevDetails) => ({
       ...prevDetails,
@@ -64,16 +63,16 @@ const ProjectDetailEdit = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem('token'); // Retrieve the token again
+    const token = localStorage.getItem('token');
 
     try {
       await axios.put(`http://localhost:3000/projects/${id}`, projectDetails, {
         headers: {
-          Authorization: `Bearer ${token}`, // Include token in headers
+          Authorization: `Bearer ${token}`,
         },
       });
       console.log("Navigating to:", `/projects/${id}`);
-      navigate(`/projects/${id}`); // Redirect back to project details
+      navigate(`/projects/${id}`);
     } catch (error) {
       console.error("Error updating project:", error);
     }
@@ -88,11 +87,11 @@ const ProjectDetailEdit = () => {
   }
 
   return (
-    <div className="project-detail-edit">
-      <h1>Edit Project</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Name:</label>
+    <div className="create-project-form-container">
+      <h2>Edit Project</h2>
+      <form onSubmit={handleSubmit} className="create-project-form">
+        <label>
+          Name:
           <input
             type="text"
             name="name"
@@ -100,27 +99,31 @@ const ProjectDetailEdit = () => {
             onChange={handleChange}
             required
           />
-        </div>
-        <div>
-          <label>Description:</label>
+        </label>
+
+        <label>
+          Description:
           <textarea
             name="description"
             value={projectDetails.description}
             onChange={handleChange}
             required
-          />
-        </div>
-        <div>
-          <label>Image URL:</label>
+          ></textarea>
+        </label>
+
+        <label>
+          Image URL:
           <input
             type="text"
             name="image"
             value={projectDetails.image}
             onChange={handleChange}
+            required
           />
-        </div>
-        <div>
-          <label>Required Amount:</label>
+        </label>
+
+        <label>
+          Required Amount:
           <input
             type="number"
             name="requiredAmount"
@@ -128,9 +131,10 @@ const ProjectDetailEdit = () => {
             onChange={handleChange}
             required
           />
-        </div>
-        <div>
-          <label>Documentation (comma separated):</label>
+        </label>
+
+        <label>
+          Documentation (comma separated):
           <input
             type="text"
             name="documentation"
@@ -142,8 +146,9 @@ const ProjectDetailEdit = () => {
               },
             })}
           />
-        </div>
-        <button type="submit">Save Changes</button>
+        </label>
+
+        <button type="submit" className="submit-button">Save Changes</button>
       </form>
     </div>
   );

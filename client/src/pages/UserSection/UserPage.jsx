@@ -1,8 +1,7 @@
-// src/components/UserPage/UserPage.jsx
-import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import './UserPage.css';
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import "./UserPage.css";
 
 const UserPage = () => {
   const [user, setUser] = useState(null);
@@ -12,35 +11,30 @@ const UserPage = () => {
 
   // Check if the user is authenticated
   useEffect(() => {
-    const token = localStorage.getItem('token'); // Adjust based on your storage choice
+    const token = localStorage.getItem("token");
     if (!token) {
-      navigate('/login'); // Redirect to login if not authenticated
+      navigate("/login"); // Redirect to login if not authenticated
     }
   }, [navigate]);
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const token = localStorage.getItem('token'); // Retrieve token from local storage
-        // Fetch the user information
+        const token = localStorage.getItem("token");
         const userResponse = await axios.get(`http://localhost:3000/profile`, {
-          headers: {
-            Authorization: `Bearer ${token}` // Include token in the request header
-          }
+          headers: { Authorization: `Bearer ${token}` },
         });
-
         const userData = userResponse.data;
-        console.log(userData);
         setUser(userData);
-        setProjectsCreated(userData.createdProjects || []); // Safely set created projects
-        setDonatedProjects(userData.donatedProjects || []); // Safely set donated projects
+        setProjectsCreated(userData.createdProjects || []);
+        setDonatedProjects(userData.donatedProjects || []);
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
     };
 
     fetchUserData();
-  }, []); // No dependencies needed; it runs once on component mount
+  }, []);
 
   if (!user) {
     return <div>Loading user data...</div>;
@@ -52,6 +46,12 @@ const UserPage = () => {
         <h2>{user.fullName}</h2>
         <p>{user.email}</p>
         <p>{user.bio}</p>
+        <button
+          className="edit-button"
+          onClick={() => navigate("/profile/edit")}
+        >
+          Edit
+        </button>
       </div>
 
       <div className="projects-section">
@@ -60,17 +60,24 @@ const UserPage = () => {
           {projectsCreated.length > 0 ? (
             projectsCreated.map((project) => (
               <div key={project._id} className="project-card">
-                <img src={project.image || 'https://via.placeholder.com/300'} alt={project.name} />
+                <img
+                  src={project.image || "https://via.placeholder.com/300"}
+                  alt={project.name}
+                />
                 <div className="project-info">
                   <h4>{project.name}</h4>
                   <p>{project.description}</p>
                   <p>
-                    <strong>Funds Raised:</strong> ${project.currentAmount} / ${project.requiredAmount}
+                    <strong>Funds Raised:</strong> ${project.currentAmount} / $
+                    {project.requiredAmount}
                   </p>
                   <p>
-                    <strong>Funders:</strong> {project.funders.join(', ')}
+                    <strong>Funders:</strong> {project.funders.join(", ")}
                   </p>
-                  <Link to={`/projects/${project._id}`} className="project-link">
+                  <Link
+                    to={`/projects/${project._id}`}
+                    className="project-link"
+                  >
                     View Details
                   </Link>
                 </div>
@@ -88,17 +95,24 @@ const UserPage = () => {
           {donatedProjects.length > 0 ? (
             donatedProjects.map((project) => (
               <div key={project._id} className="project-card">
-                <img src={project.image || 'https://via.placeholder.com/300'} alt={project.name} />
+                <img
+                  src={project.image || "https://via.placeholder.com/300"}
+                  alt={project.name}
+                />
                 <div className="project-info">
                   <h4>{project.name}</h4>
                   <p>{project.description}</p>
                   <p>
-                    <strong>Funds Raised:</strong> ${project.currentAmount} / ${project.requiredAmount}
+                    <strong>Funds Raised:</strong> ${project.currentAmount} / $
+                    {project.requiredAmount}
                   </p>
                   <p>
-                    <strong>Funders:</strong> {project.funders.join(', ')}
+                    <strong>Funders:</strong> {project.funders.join(", ")}
                   </p>
-                  <Link to={`/projects/${project._id}`} className="project-link">
+                  <Link
+                    to={`/projects/${project._id}`}
+                    className="project-link"
+                  >
                     View Details
                   </Link>
                 </div>

@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { formatDistanceToNow, parseISO } from "date-fns";
 import "./ProjectList.css";
 
 const ProjectList = () => {
   const [projects, setProjects] = useState([]);
 
-  
   const capitalizeFirstLetter = (string) => {
-      if (!string) return "";
-      return string.charAt(0).toUpperCase() + string.slice(1);
+    if (!string) return "";
+    return string.charAt(0).toUpperCase() + string.slice(1);
   };
 
   useEffect(() => {
@@ -17,9 +17,7 @@ const ProjectList = () => {
     const fetchProjects = async () => {
       try {
         const response = await axios.get("http://localhost:3000/projects");
-        // console.log(response);
         setProjects(response.data);
-        console.log(localStorage);
       } catch (error) {
         console.error("Error fetching projects:", error);
       }
@@ -40,6 +38,7 @@ const ProjectList = () => {
               <p><strong>Creator:</strong> {project.owner ? capitalizeFirstLetter(project.owner.username) : "Unknown"}</p>
               <p><strong>Required Amount:</strong> ${project.requiredAmount}</p>
               <p><strong>Current Amount:</strong> ${project.currentAmount}</p>
+              <p><strong>Created:</strong> {formatDistanceToNow(parseISO(project.createdAt))} ago</p>
               <Link to={`/projects/${project._id}`} className="project-link">View Details</Link>
             </div>
           </li>

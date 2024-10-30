@@ -11,6 +11,7 @@ import Login from "./pages/Login/Login";
 import SignUp from "./pages/SignUp/SignUp";
 import ProjectDetailEdit from "./pages/ProjectDetailsEdit/ProjectDetailsEdit";
 import CreateProjectForm from "./pages/CreateProject/CreateProjectForm";
+import ProfileEditForm from "./pages/ProfileEdit/ProfileEditForm";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<SignUp />} />
           <Route path="/createProject" element={<CreateProjectForm />} />
+          <Route path="/profile/edit" element={<ProfileEditForm />} />
         </Routes>
       </div>
       <Footer />

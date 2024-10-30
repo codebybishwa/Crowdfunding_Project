@@ -38,6 +38,17 @@ app.get('/profile', authenticateToken, async (req, res) => {
   }
 });
 
+app.put('/profile', authenticateToken, async (req, res) => {
+  try {
+    const { fullName, username, email, PhnNo, bio } = req.body;
+    const user = await User.findByIdAndUpdate(req.user.id , {fullName, username, email, PhnNo, bio});
+    res.json(user);    
+  } catch (error) {
+    console.error("Error updating user data:", error);
+    res.sendStatus(500);
+  }
+});
+
 app.post('/register', async (req, res) => {
   try {
 

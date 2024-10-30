@@ -83,7 +83,7 @@
     margin-top: 20px; /* Space above the button group */
   }
   
-  .edit-button,
+  .editbutton,
   .delete-button {
     padding: 10px 15px; /* Padding for a better click area */
     font-size: 16px; /* Font size */
@@ -93,12 +93,12 @@
     transition: background-color 0.3s ease; /* Smooth transition */
   }
   
-  .edit-button {
+  .editbutton {
     background-color: #4CAF50; /* Green background */
     color: white; /* White text */
   }
   
-  .edit-button:hover {
+  .editbutton:hover {
     background-color: #45a049; /* Darker green on hover */
   }
   

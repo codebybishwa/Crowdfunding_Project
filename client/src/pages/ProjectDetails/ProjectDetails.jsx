@@ -1,6 +1,8 @@
+// src/components/ProjectDetail/ProjectDetail.jsx
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { formatDistanceToNow } from "date-fns";
 import "./ProjectDetails.css";
 
 const ProjectDetail = () => {
@@ -9,22 +11,20 @@ const ProjectDetail = () => {
   const [project, setProject] = useState(null);
   const [loading, setLoading] = useState(true);
   const [userId, setUserId] = useState(null);
-  // Check if the user is authenticated by checking for a token
+
   useEffect(() => {
-    const token = localStorage.getItem("token"); // Adjust based on your storage choice
-    console.log(token);
+    const token = localStorage.getItem("token");
     if (!token) {
-      navigate("/login"); // Redirect to login if not authenticated
+      navigate("/login");
     } else {
-      // Fetch current user's information to get their ID
       const fetchCurrentUser = async () => {
         try {
-          const response = await axios.get('http://localhost:3000/profile', {
+          const response = await axios.get("http://localhost:3000/profile", {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           });
-          setUserId(response.data._id); // Store the current user's ID
+          setUserId(response.data._id);
         } catch (error) {
           console.error("Error fetching current user:", error);
         }
@@ -35,19 +35,20 @@ const ProjectDetail = () => {
 
   useEffect(() => {
     const fetchProject = async () => {
-      const token = localStorage.getItem("token"); // Retrieve the token again
+      const token = localStorage.getItem("token");
 
       try {
-        const response = await axios.get(`http://localhost:3000/projects/${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`, // Include token in headers
-          },
-        });
-        console.log(response.data.owner._id);
+        const response = await axios.get(
+          `http://localhost:3000/projects/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         setProject(response.data);
       } catch (error) {
         console.error("Error fetching project:", error);
-        // Optional: Redirect to login if unauthorized
         if (error.response && error.response.status === 401) {
           navigate("/login");
         }
@@ -64,12 +65,11 @@ const ProjectDetail = () => {
       const token = localStorage.getItem("token");
 
       try {
-        const response = await axios.delete(`http://localhost:3000/projects/${id}`, {
+        await axios.delete(`http://localhost:3000/projects/${id}`, {
           headers: {
-            Authorization: `Bearer ${token}`, // Include token in headers
+            Authorization: `Bearer ${token}`,
           },
         });
-        console.log("Delete response:", response.data);
         navigate("/projects");
       } catch (error) {
         console.error("Error deleting project:", error);
@@ -88,6 +88,10 @@ const ProjectDetail = () => {
 
   const progress = (project.currentAmount / project.requiredAmount) * 100;
   const isCreator = userId === project.owner._id;
+  const createdAtFormatted = formatDistanceToNow(new Date(project.createdAt), {
+    addSuffix: true,
+  });
+
   return (
     <div className="project-detail">
       <h1>{project.name}</h1>
@@ -99,6 +103,8 @@ const ProjectDetail = () => {
       <p className="project-description">{project.description}</p>
 
       <div className="project-info">
+        <p className="created-at">Created {createdAtFormatted}</p> {/* Display creation time */}
+
         <div className="funding-details">
           <p>Required Amount: ${project.requiredAmount}</p>
           <p>Current Funding: ${project.currentAmount}</p>
@@ -137,16 +143,16 @@ const ProjectDetail = () => {
 
         {isCreator && (
           <div className="project-actions">
-          <button
-            className="edit-button"
-            onClick={() => navigate(`/projects/${id}/edit`)}
-          >
-            Edit
-          </button>
-          <button className="delete-button" onClick={handleDelete}>
-            Delete
-          </button>
-        </div>
+            <button
+              className="editbutton"
+              onClick={() => navigate(`/projects/${id}/edit`)}
+            >
+              Edit
+            </button>
+            <button className="delete-button" onClick={handleDelete}>
+              Delete
+            </button>
+          </div>
         )}
       </div>
     </div>
