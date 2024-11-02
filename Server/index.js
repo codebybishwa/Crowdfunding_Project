@@ -8,6 +8,8 @@ const cors = require("cors");
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const authenticateToken = require('./middleware/authenticateToken')
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+
 
 mongoose.connect(process.env.DB_URL)
   .then(() => {
@@ -161,6 +163,70 @@ app.put('/projects/:id', authenticateToken, async (req, res) => {
     console.log(error);
   }
 });
+
+app.post('/projects/:id', authenticateToken, async (req, res) => {
+  const { amount } = req.body;
+  const projectId = req.params.id;
+  const userId = req.user.id; // Get the logged-in user's ID from the token
+
+  console.log(amount);
+  console.log(projectId);
+
+  try {
+    // First, find the project by ID and update the currentAmount (if needed)
+    const updatedProject = await Project.findByIdAndUpdate(
+      projectId,
+      { $inc: { currentAmount: amount } }, // Increment currentAmount by the amount provided
+      { new: true } // Return the updated document
+    );
+
+    if (!updatedProject) {
+      return res.status(404).json({ message: 'Project not found' });
+    }
+
+    // Now update the user's donatedProjects array
+    await User.findByIdAndUpdate(
+      userId,
+      { $addToSet: { donatedProjects: projectId } } // Add the project ID to the user's donatedProjects
+    );
+
+    // Respond with success
+    return res.status(200).json(updatedProject);
+  } catch (error) {
+    console.error('Error updating project or user:', error);
+    return res.status(500).json({ message: 'Server error', error });
+  }
+});
+
+
+app.post("/create-payment-intent", async (req, res) => {
+  const { projectId, amount } = req.body;
+
+  try {
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount,
+      currency: "usd",
+      metadata: { projectId },
+    });
+    res.send({ clientSecret: paymentIntent.client_secret });
+  } catch (error) {
+    console.error("Error creating payment intent:", error);
+    res.status(500).send({ error: "Failed to create payment intent." });
+  }
+});
+
+
+
+app.post('/process-googlepay-payment', (req, res) => {
+  const { paymentData } = req.body;
+  console.log("Received payment data:", paymentData);
+
+  // Mock success response
+  res.json({ success: true });
+});
+
+
+
 
 app.delete('/projects/:id', authenticateToken, async (req, res) => {
   try {

@@ -1,114 +1,34 @@
 /* src/pages/ProjectDetail.css */
 .project-detail {
-    padding: 20px;
-    max-width: 800px;
-    margin: auto;
-    font-family: Arial, sans-serif;
-    color: #333;
-  }
-  
-  .project-detail h1 {
-    font-size: 2rem;
-    color: #333;
-  }
-  
-  .project-description {
-    margin-top: 10px;
-    font-size: 1.2rem;
-    line-height: 1.6;
-    color: #555;
-  }
-  
-  .project-info {
-    margin-top: 20px;
-  }
-  
-  .funding-details p {
-    margin: 5px 0;
-  }
-  
-  .progress-bar {
-    width: 100%;
-    background-color: #ddd;
-    border-radius: 5px;
-    overflow: hidden;
-    margin-top: 10px;
-    margin-bottom: 5px;
-  }
-  
-  .progress {
-    height: 10px;
-    background-color: #4caf50;
-    width: 0;
-    transition: width 0.3s ease;
-  }
-  
-  .funders, .documentation {
-    margin-top: 20px;
-  }
-  
-  .funders h3, .documentation h3 {
-    font-size: 1.5rem;
-    color: #333;
-  }
-  
-  .funders ul, .documentation ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .funders li, .documentation li {
-    padding: 5px 0;
-    color: #444;
-  }
-  
-  .documentation a {
-    color: #1a73e8;
-    text-decoration: none;
-  }
-  
-  .documentation a:hover {
-    text-decoration: underline;
-  }
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+}
 
-  .project-needs {
-    margin: 20px 0; 
-    font-size: 1.1em; 
-    color: #333; 
-  }
-  
-  .project-actions {
-    display: flex;
-    justify-content: space-between; /* Space out the buttons */
-    margin-top: 20px; /* Space above the button group */
-  }
-  
-  .editbutton,
-  .delete-button {
-    padding: 10px 15px; /* Padding for a better click area */
-    font-size: 16px; /* Font size */
-    border: none; /* Remove default border */
-    border-radius: 5px; /* Rounded corners */
-    cursor: pointer; /* Change cursor on hover */
-    transition: background-color 0.3s ease; /* Smooth transition */
-  }
-  
-  .editbutton {
-    background-color: #4CAF50; /* Green background */
-    color: white; /* White text */
-  }
-  
-  .editbutton:hover {
-    background-color: #45a049; /* Darker green on hover */
-  }
-  
-  .delete-button {
-    background-color: #f44336; /* Red background */
-    color: white; /* White text */
-  }
-  
-  .delete-button:hover {
-    background-color: #d32f2f; /* Darker red on hover */
-  }
-  
-  
+.project-detail-image {
+  border-radius: 8px;
+}
+
+.project-description {
+  margin-top: 10px;
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: #555;
+}
+
+.project-info {
+  margin-top: 20px;
+}
+
+.funders, .documentation {
+  margin-top: 20px;
+}
+
+.funders h3, .documentation h3 {
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.project-actions {
+  margin-top: 20px; 
+}
