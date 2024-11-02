@@ -18,6 +18,7 @@ mongoose.connect(process.env.DB_URL)
   .catch((e) => {
     console.log("Error : ", e);
   })
+  
 
 app.use(cors({ origin: "http://localhost:5173" }));
 app.use(express.json());

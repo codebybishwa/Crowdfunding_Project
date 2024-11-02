@@ -5,6 +5,7 @@
     "hardhat": "^2.22.15"
   },
   "devDependencies": {
+    "@chainlink/contracts": "^1.3.0",
     "@nomicfoundation/hardhat-toolbox": "^5.0.0"
   }
 }
