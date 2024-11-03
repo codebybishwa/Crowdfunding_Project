@@ -26,6 +26,7 @@ const Login = () => {
       localStorage.setItem("token", response.data.token);
 
       // Redirect to the desired page after successful login
+      console.log(response.data.token);
       navigate("/");
     } catch (error) {
       // Handle error responses from the backend

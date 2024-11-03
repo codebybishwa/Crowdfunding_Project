@@ -199,6 +199,32 @@ app.post('/projects/:id', authenticateToken, async (req, res) => {
   }
 });
 
+// Endpoint to handle post-payment database update
+app.put("/projects/:id/contribute", authenticateToken, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { amount, userId } = req.body;
+    console.log(amount, userId);
+    const amountNumeric = Number(amount);
+    // Update project with new contribution
+    const project = await Project.findById(id);
+    project.currentAmount += amountNumeric; 
+    // if (!project.funders.includes(userId)) {
+      project.funders.push(userId);
+    // }
+    await project.save();
+
+    // Update user donatedProjects array
+    await User.findByIdAndUpdate(userId, {
+      $addToSet: { donatedProjects: id }
+    });
+
+    res.status(200).json({ message: "Contribution recorded successfully" });
+  } catch (error) {
+    console.error("Error recording contribution:", error);
+    res.status(500).json({ message: "Server error. Please try again." });
+  }
+});
 
 app.post("/create-payment-intent", async (req, res) => {
   const { projectId, amount } = req.body;

@@ -1,57 +1,129 @@
-// CryptoPaymentButton.js
-import React, { useState } from "react";
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
-import axios from "axios"; 
+import React, { useState, useEffect } from "react";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Typography } from "@mui/material";
+import { ethers } from "ethers";
+import axios from "axios";
+import { default as jwt_decode } from "jwt-decode";
+import abi from "../../CrowdFundingJson/CrowdFunding.json";
 
 const CryptoPaymentButton = ({ projectId, onSuccess }) => {
   const [showPopup, setShowPopup] = useState(false);
   const [amount, setAmount] = useState("");
-  const [cryptoAddress, setCryptoAddress] = useState("");
-  const [step, setStep] = useState(0);
+  const [usdAmount, setUsdAmount] = useState("0.00"); // State for USD amount
+  const [loading, setLoading] = useState(false);
+  const [jwtToken, setJwtToken] = useState(null);
 
-  const handleNextStep = () => {
-    if (step === 0) {
-      // Validate amount
-      if (!amount || isNaN(amount) || parseFloat(amount) <= 0) {
-        alert("Please enter a valid amount.");
-      } else {
-        setStep(1);
-      }
-    } else if (step === 1) {
-      // Validate crypto address (simple validation)
-      if (!cryptoAddress) {
-        alert("Please enter a valid cryptocurrency address.");
-      } else {
-        processPayment(amount, cryptoAddress);
-      }
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setJwtToken(token);
+    } else {
+      console.error("JWT Token not found");
     }
-  };
+  }, []);
 
-  const processPayment = async (amount, cryptoAddress) => {
+  const handlePayment = async () => {
+    if (!window.ethereum) {
+      alert("MetaMask is required to make a payment.");
+      return;
+    }
+
+    setLoading(true);
+    let usdAmountLogged;
+
     try {
-      const amountInNumber = parseFloat(amount);
-      console.log("Sending crypto payment amount:", amountInNumber);
-      console.log("Project ID:", projectId);
-      console.log("Crypto Address:", cryptoAddress);
+      // Decode JWT token to get contributor ID
+      const decoded = jwt_decode(jwtToken);
+      const contributorId = decoded.sub;
+      console.log(contributorId);
+      const ethAmount = ethers.parseEther(amount);
 
-      const response = await axios.post(`http://localhost:3000/projects/${projectId}`, {
-        amount: amountInNumber,
-        cryptoAddress: cryptoAddress
-      });
+      // Set up provider and signer for MetaMask interaction
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      await provider.send("eth_requestAccounts", []);
+      const signer = await provider.getSigner();
 
-      console.log("Response from API:", response.data);
+      // Connect to the contract
+      const contract = new ethers.Contract(
+        "0x667Db83d80203CFEF6782e5Ff3941d0AcA5A7FD1",
+        abi.abi,
+        signer
+      );
+
+      // Fetch the latest ETH-USD conversion rate from the contract
+      const ethUsdRate = await contract.getLatestETHUSDPrice();
+      const usdEquivalent = (parseFloat(amount) * ethers.formatUnits(ethUsdRate, 18)).toFixed(6);
+      console.log(`USD Equivalent: $${usdEquivalent}`);
+
+      // Contribute to the contract
+      const tx = await contract.contribute(projectId, contributorId, { value: ethAmount });
+      const receipt = await tx.wait();
+
+      // Process the transaction receipt for event logs
+      if (receipt.logs && receipt.logs.length > 0) {
+        const iface = new ethers.Interface(abi.abi);
+        receipt.logs.forEach((log) => {
+          try {
+            const parsedLog = iface.parseLog(log);
+            if (parsedLog.name === "ContributionReceived") {
+              usdAmountLogged = ethers.formatUnits(parsedLog.args[3], 18);
+              console.log(`ETH Amount (logged): ${ethers.formatEther(parsedLog.args[2])}`);
+              console.log(`USD Amount (logged): ${usdAmountLogged}`);
+            }
+          } catch (err) {
+            console.error("Failed to parse log:", err);
+          }
+        });
+      }
+
+      // Send the transaction information to the backend
+      const response = await axios.put(
+        `http://localhost:3000/projects/${projectId}/contribute`,
+        {
+          amount: usdAmountLogged || usdEquivalent,
+          userId : contributorId,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${jwtToken}`,
+          },
+        }
+      );
 
       if (response.status === 200) {
         alert("Payment successful!");
-        onSuccess(); 
+        onSuccess();
       } else {
         alert("Payment failed. Please try again.");
       }
     } catch (error) {
-      console.error("Payment processing error:", error);
+      console.error("Payment error:", error);
       alert("There was an error processing your payment. Please try again.");
     } finally {
-      setShowPopup(false); // Close the popup on completion
+      setLoading(false);
+      setShowPopup(false);
+    }
+  };
+
+  // Update USD amount whenever ETH amount changes
+  const handleAmountChange = async (e) => {
+    const ethInput = e.target.value;
+    setAmount(ethInput);
+
+    if (ethInput) {
+      const ethAmount = ethers.parseEther(ethInput);
+      // Fetch the latest ETH-USD conversion rate
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const contract = new ethers.Contract(
+        "0x667Db83d80203CFEF6782e5Ff3941d0AcA5A7FD1",
+        abi.abi,
+        provider
+      );
+
+      const ethUsdRate = await contract.getLatestETHUSDPrice();
+      const usdEquivalent = (parseFloat(ethInput) * ethers.formatUnits(ethUsdRate, 18)).toFixed(6);
+      setUsdAmount(usdEquivalent);
+    } else {
+      setUsdAmount("0.00");
     }
   };
 
@@ -61,43 +133,45 @@ const CryptoPaymentButton = ({ projectId, onSuccess }) => {
         variant="contained"
         color="primary"
         onClick={() => setShowPopup(true)}
+        aria-label="Open crypto payment dialog"
       >
         Pay with Crypto
       </Button>
 
-      <Dialog open={showPopup} onClose={() => setShowPopup(false)} maxWidth="sm" fullWidth>
-        <DialogTitle>Crypto Payment</DialogTitle>
+      <Dialog
+        open={showPopup}
+        onClose={() => setShowPopup(false)}
+        maxWidth="sm"
+        fullWidth
+        aria-labelledby="crypto-payment-dialog"
+      >
+        <DialogTitle id="crypto-payment-dialog">Crypto Payment</DialogTitle>
         <DialogContent>
-          {step === 0 && (
-            <TextField
-              label="Enter Amount (in crypto)"
-              type="number"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              fullWidth
-              margin="normal"
-            />
-          )}
-          {step === 1 && (
-            <TextField
-              label="Enter Crypto Address"
-              value={cryptoAddress}
-              onChange={(e) => setCryptoAddress(e.target.value)}
-              fullWidth
-              margin="normal"
-            />
-          )}
+          <Typography variant="h6">Equivalent Amount: ${usdAmount}</Typography>
+          <TextField
+            label="Enter Amount (in ETH)"
+            type="number"
+            value={amount}
+            onChange={handleAmountChange}
+            fullWidth
+            margin="normal"
+            inputProps={{ "aria-label": "Amount in ETH" }}
+          />
         </DialogContent>
         <DialogActions>
-          {step > 0 && (
-            <Button onClick={() => setStep(step - 1)} color="primary">
-              Back
-            </Button>
-          )}
-          <Button onClick={handleNextStep} color="primary">
-            {step === 1 ? "Confirm" : "Next"}
+          <Button
+            onClick={handlePayment}
+            color="primary"
+            disabled={loading}
+            aria-label="Confirm crypto payment"
+          >
+            {loading ? "Processing..." : "Confirm"}
           </Button>
-          <Button onClick={() => setShowPopup(false)} color="secondary">
+          <Button
+            onClick={() => setShowPopup(false)}
+            color="secondary"
+            aria-label="Cancel crypto payment"
+          >
             Cancel
           </Button>
         </DialogActions>
