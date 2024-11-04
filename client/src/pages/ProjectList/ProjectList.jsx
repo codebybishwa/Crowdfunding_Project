@@ -6,6 +6,7 @@ import "./ProjectList.css";
 
 const ProjectList = () => {
   const [projects, setProjects] = useState([]);
+  const [showCompleted, setShowCompleted] = useState(false);
 
   const capitalizeFirstLetter = (string) => {
     if (!string) return "";
@@ -13,7 +14,6 @@ const ProjectList = () => {
   };
 
   useEffect(() => {
-    // Fetch projects from the server
     const fetchProjects = async () => {
       try {
         const response = await axios.get("http://localhost:3000/projects");
@@ -25,12 +25,33 @@ const ProjectList = () => {
     fetchProjects();
   }, []);
 
+  const filteredProjects = projects.filter((project) =>
+    showCompleted
+      ? project.currentAmount >= project.requiredAmount
+      : project.currentAmount < project.requiredAmount
+  );
+
   return (
     <div className="project-list">
       <h1>Our Projects</h1>
-      <ul className="project-list-container">
-        {projects.map((project) => (
-          <li key={project._id} className="project-card">
+      <div className="toggle-buttons">
+        <button
+          className={`toggle-button ${!showCompleted ? "active" : ""}`}
+          onClick={() => setShowCompleted(false)}
+        >
+          Ongoing
+        </button>
+        <button
+          className={`toggle-button ${showCompleted ? "active" : ""}`}
+          onClick={() => setShowCompleted(true)}
+        >
+          Completed
+        </button>
+      </div>
+
+      <div className="project-list-grid">
+        {filteredProjects.map((project) => (
+          <div key={project._id} className="project-card">
             <img src={project.image} alt={project.name} className="project-image" />
             <div className="project-details">
               <h2>{project.name}</h2>
@@ -41,9 +62,9 @@ const ProjectList = () => {
               <p><strong>Created:</strong> {formatDistanceToNow(parseISO(project.createdAt))} ago</p>
               <Link to={`/projects/${project._id}`} className="project-link">View Details</Link>
             </div>
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };
