@@ -20,7 +20,7 @@ import PaymentResult from "./pages/Payment/PaymentResult.jsx";
 function App() {
   return (
     <>
-      <NavbarSection /> {/* Navbar will be visible on all pages */}
+      <NavbarSection /> {/* Navbar will be visible on all pages */} 
       <div>
         <Routes>
           <Route path="/" element={<LandingPage />} />

@@ -1,84 +1,168 @@
-
+/* Login Container */
 .login-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    width: 100%;
-    background-color: #f4f4f4;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100%;
+  background-color: #f9f8f7; /* Softer background color */
+  padding: 1rem; /* Padding to avoid edge touching on smaller screens */
+}
+
+/* Login Box */
+.login-box {
+  width: 100%;
+  max-width: 400px;
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+}
+
+/* Login Title */
+.login-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  text-align: center;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+/* Form Group */
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* Input Field */
+.form-input {
+  width: 100%;
+  height: 40px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.form-input:focus {
+  border-color: #1e90ff;
+  outline: none;
+}
+
+/* Link for Register */
+.forgot-password {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 0.9rem;
+  color: #1e90ff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+  color: #1c86ee;
+}
+
+/* Login Button */
+.login-button {
+  width: 100%;
+  height: 40px;
+  margin-top: 16px;
+  background-color: #1e90ff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+  background-color: #1c86ee;
+}
+
+/* Error Message */
+.error-message {
+  color: #d9534f;
+  font-size: 0.9rem;
+  margin-top: 8px;
+  text-align: center;
+}
+
+/* Success Message */
+.success-message {
+  color: #5cb85c;
+  font-size: 0.9rem;
+  margin-top: 8px;
+  text-align: center;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
   .login-box {
-    width: 100%;
-    max-width: 400px;
-    padding: 24px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(10px);
+    padding: 20px;
   }
-  
+
   .login-title {
-    font-size: 24px;
-    font-weight: 600;
-    text-align: center;
-    color: #444;
-    margin-bottom: 16px;
+    font-size: 1.6rem;
   }
-  
-  
-  .form-group {
-    margin-bottom: 16px;
-  }
-  
+
   .form-label {
-    display: block;
-    margin-bottom: 8px;
-    font-size: 14px;
-    color: #666;
+    font-size: 0.85rem;
   }
-  
+
   .form-input {
-    width: 100%;
-    height: 40px;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 14px;
+    font-size: 0.95rem;
   }
-  
-  .form-input:focus {
-    border-color: #1e90ff;
-    outline: none;
-  }
-  
-  .forgot-password {
-    display: inline-block;
-    margin-top: 8px;
-    font-size: 14px;
-    color: #1e90ff;
-    text-decoration: none;
-  }
-  
-  .forgot-password:hover {
-    text-decoration: underline;
-  }
-  
+
   .login-button {
-    width: 100%;
+    height: 38px;
+    font-size: 0.95rem;
+  }
+
+  .forgot-password {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-container {
+    padding: 1rem;
+  }
+
+  .login-box {
+    padding: 18px;
+    max-width: 90%;
+  }
+
+  .login-title {
+    font-size: 1.5rem;
+  }
+
+  .form-label {
+    font-size: 0.8rem;
+  }
+
+  .form-input {
+    font-size: 0.9rem;
+  }
+
+  .login-button {
     height: 36px;
-    margin-top: 16px;
-    background-color: #1e90ff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+    font-size: 0.9rem;
   }
-  
-  .login-button:hover {
-    background-color: #1c86ee;
+
+  .forgot-password {
+    font-size: 0.8rem;
   }
-  
+}

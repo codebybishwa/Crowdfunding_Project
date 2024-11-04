@@ -1,6 +1,7 @@
 .payment-options {
     max-width: 600px;
     margin: 20px auto;
+    margin-bottom: 40px;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -9,9 +10,10 @@
   }
   
   .payment-method-buttons {
+    margin-top: 75px;
     display: flex;
     justify-content: space-between;
-    margin-bottom: 15px;
+    margin-bottom: 50px;
   }
   
   .payment-method-button {

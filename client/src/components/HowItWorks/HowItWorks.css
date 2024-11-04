@@ -1,49 +1,120 @@
+/* Updated HowItWorks.css */
+
 .how-it-works {
     padding: 60px 20px;
     text-align: center;
-    background: #f8f9fa; /* Light background for contrast */
+    background: #f0f4f8; /* Light blue-gray background to match PlatformFeatures */
+    border-radius: 0; /* Remove border radius to avoid divider appearance */
+    width: 100vw; /* Full viewport width to eliminate side borders */
+    margin-left: calc(-50vw + 50%); /* Center-align while making it full-width */
+    box-shadow: none; /* Remove shadow for seamless integration */
+}
+
+.how-it-works h2 {
+    font-size: 2.8rem;
+    margin-bottom: 40px;
+    color: #2c3e50;
+    font-weight: bold;
+}
+
+.steps {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    max-width: 1200px; /* Centered content within the section */
+    margin: 0 auto;
+}
+
+.step {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    flex: 1;
+    min-width: 250px;
+    max-width: 350px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.step:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+}
+
+.step h3 {
+    color: #4A90E2;
+    font-size: 1.6rem;
+    margin-bottom: 15px;
+}
+
+.step p {
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.6;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .steps {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .how-it-works h2 {
+        font-size: 2.2rem;
+    }
+}
+
+
+
+
+/* .how-it-works {
+    padding: 60px 20px;
+    text-align: center;
+    background: #f8f9fa;
 }
 
 h2 {
-    font-size: 2.5rem; /* Larger font size for the heading */
+    font-size: 2.5rem;
     margin-bottom: 40px;
-    color: #333; /* Dark color for the heading */
-    font-weight: bold; /* Bold for emphasis */
+    color: #333;
+    font-weight: bold;
 }
 
 .steps {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    max-width: 1200px; /* Limit the width of the steps container */
-    margin: 0 auto; /* Center the container */
-    gap: 20px; /* Space between steps */
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 20px;
 }
 
 .step {
-    background: white; /* White background for the steps */
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    padding: 30px; /* Ample padding for content */
-    margin: 10px; /* Consistent margin for better alignment */
-    flex: 1; /* Allow the steps to grow */
-    min-width: 250px; /* Minimum width for responsive design */
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transition effects */
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    margin: 10px;
+    flex: 1;
+    min-width: 250px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .step:hover {
-    transform: translateY(-5px); /* Lift effect on hover */
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); /* Deeper shadow on hover */
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
 .step h3 {
-    color: #4A90E2; /* Blue color for headings */
-    font-size: 1.5rem; /* Larger font size for step titles */
-    margin-bottom: 10px; /* Space below title */
+    color: #4A90E2;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
 }
 
 .step p {
-    font-size: 1rem; /* Base font size for descriptions */
-    color: #555; /* Grey color for text */
-    line-height: 1.5; /* Improved line height for readability */
-}
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.5;
+} */
