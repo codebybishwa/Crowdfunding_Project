@@ -1,18 +1,15 @@
-// src/components/HeroSection/HeroSection.jsx
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './HeroSection.css'; // Import the CSS file for styles
-import gif from './Untitled design.gif'; // Update with your GIF path
+import video from './home vid.mp4'; // Update with your video path
 
 const HeroSection = () => {
   const navigate = useNavigate();
 
-  // Function to handle Explore Projects button click
   const handleExploreProjects = () => {
     navigate('/projects');
   };
 
-  // Function to handle Create Project button click
   const handleCreateProject = () => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -24,12 +21,14 @@ const HeroSection = () => {
 
   return (
     <div className="landing-container">
-      {/* Full-width GIF */}
-      <img
-        src={gif}
-        alt="Crowdfunding"
-        className="landing-gif"
-      />
+      <video
+        src={video}
+        className="landing-video"
+        autoPlay
+        loop
+        muted
+        playsInline // For mobile compatibility
+      ></video>
 
       {/* Content on the Left Side */}
       <div className="content-container">

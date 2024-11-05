@@ -2,30 +2,20 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #000; /* Black background */
+  background-color: #000;
   padding: 15px 30px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   position: sticky;
   top: 0;
   z-index: 1000;
-  border-radius: 0; /* No curved edges */
-}
-
-.navbar:hover {
-  background-color: #111; /* Slightly lighter black on hover */
 }
 
 .navbar-logo {
   font-size: 26px;
-  color: #fff; /* White text */
-  font-weight: 500; /* Medium weight */
-  font-family: 'Poppins', sans-serif; /* Use the imported font */
-  transition: color 0.3s ease;
+  color: #fff;
+  font-weight: 500;
+  font-family: 'Poppins', sans-serif;
   cursor: pointer;
-}
-
-.navbar-logo:hover {
-  color: #4a90e2; /* Accent color on hover */
 }
 
 .navbar-links {
@@ -37,46 +27,55 @@
 
 .navbar-links a {
   text-decoration: none;
-  color: #fff; /* White text */
+  color: #fff;
   font-size: 1rem;
   padding: 10px 15px;
-  border-radius: 20px; /* Add curved edges */
-  transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease; /* Smooth transition */
-}
-
-.navbar-links a:hover {
-  background-color: rgba(255, 255, 255, 0.1); /* Light background on hover */
-  color: #ffffff; /* Keep text white */
-  border: 1px solid white; /* Light white border on hover */
+  border-radius: 20px;
+  transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
 }
 
 .logout-button {
   background: none;
-  border: 1px solid #4a90e2; /* Accent border */
-  color: #4a90e2; /* Accent color */
+  border: 1px solid #4a90e2;
+  color: #4a90e2;
   cursor: pointer;
   font-size: 1rem;
   padding: 8px 15px;
-  border-radius: 20px; /* Add curved edges */
+  border-radius: 20px;
   transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
 }
 
-.logout-button:hover {
-  background-color: rgba(255, 255, 255, 0.1); /* Light background on hover */
-  color: white; /* Change text color to white */
-  border: 1px solid white; /* Light white border on hover */
-}
-
 @media (max-width: 768px) {
-  .navbar {
+  .navbar-links {
+    display: none; /* Hide links by default on small screens */
     flex-direction: column;
-    align-items: flex-start;
-    padding: 10px 20px;
+    position: absolute;
+    top: 60px; /* Adjust based on navbar height */
+    right: 10px;
+    background-color: #000;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 10px;
+    width: 200px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   }
 
-  .navbar-links {
-    flex-direction: column;
-    gap: 10px;
-    width: 100%;
+  .navbar-links.navbar-links-active {
+    display: flex; /* Show links when menu is open */
+  }
+
+  .navbar-toggle {
+    display: block;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+}
+
+@media (min-width: 769px) {
+  .navbar-toggle {
+    display: none; /* Hide toggle button on larger screens */
   }
 }
