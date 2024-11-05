@@ -272,7 +272,20 @@ app.post('/process-googlepay-payment', (req, res) => {
 app.delete('/projects/:id', authenticateToken, async (req, res) => {
   try {
     const { id } = req.params;
+
     const deletedProject = await Project.findByIdAndDelete(id);
+
+    // Ensure deletedProject exists to avoid errors
+    if (!deletedProject) {
+      return res.status(404).json({ message: "Project not found" });
+    }
+    
+    // Iterate over each funder to remove the project ID from their donatedProjects array
+    for (const userid of funders) {
+      await User.findByIdAndUpdate(userid, {
+        $pull: { donatedProjects: id }
+      });
+    }
 
     res.json({ message: "Project deleted successfully", deletedProject });
   } catch (error) {
