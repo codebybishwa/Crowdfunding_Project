@@ -1,12 +1,14 @@
 // src/components/FundingInstructions/FundingInstructions.jsx
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Container, Typography, Button, Box } from "@mui/material";
+import { Container, Typography, Button, Box, Grid, Checkbox, FormControlLabel } from "@mui/material";
 import './FundingInstructions.css';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 const FundingInstructions = () => {
   const navigate = useNavigate();
   const { id } = useParams();
+  const [isChecked, setIsChecked] = useState(false); // State to manage checkbox
 
   const instructions = [
     {
@@ -41,23 +43,42 @@ const FundingInstructions = () => {
 
   return (
     <Container maxWidth="sm" className="funding-instructions">
-      <Box sx={{ padding: 2, borderRadius: 2, boxShadow: 3, backgroundColor: "#f9f9f9" }}>
+      <Box sx={{ padding: 3, borderRadius: 2, boxShadow: 3, backgroundColor: "#f9f9f9" }}>
         <Typography variant="h4" component="h2" gutterBottom>
           Fund Project
         </Typography>
         <Typography variant="body1" paragraph>
           To proceed with funding, please follow the instructions below:
         </Typography>
-        {instructions.map((step, index) => (
-          <Box key={index} sx={{ marginBottom: 2 }}>
-            <Typography variant="h6">{step.title}</Typography>
-            <Typography variant="body2">{step.content}</Typography>
-          </Box>
-        ))}
+        <Grid container spacing={2}>
+          {instructions.map((step, index) => (
+            <Grid item xs={12} key={index}>
+              <Box sx={{ display: 'flex', alignItems: 'flex-start', marginBottom: 2 }}>
+                <CheckCircleIcon sx={{ color: 'primary.main', marginRight: 1 }} />
+                <Box>
+                  <Typography variant="h6">{step.title}</Typography>
+                  <Typography variant="body2">{step.content}</Typography>
+                </Box>
+              </Box>
+            </Grid>
+          ))}
+        </Grid>
+        <FormControlLabel
+          control={
+            <Checkbox 
+              checked={isChecked}
+              onChange={() => setIsChecked(!isChecked)}
+              color="primary"
+            />
+          }
+          label="I have read all instructions"
+        />
         <Button
           variant="contained"
           color="primary"
           onClick={() => navigate(`/projects/${id}/payment-options`)}
+          disabled={!isChecked} // Disable button if checkbox is not checked
+          sx={{ marginTop: 2, width: '100%' }}
         >
           Continue
         </Button>

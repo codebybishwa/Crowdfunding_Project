@@ -1,13 +1,16 @@
 .featured-projects {
     padding: 60px 20px;
     text-align: center;
-    background: #f2f4f5; /* Light gray background for a clean, modern look */
+    background: #f2f4f5;
+    border-radius: 10px; /* Rounded corners for the section */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
 }
 
 h2 {
     font-size: 2.8rem;
     margin-bottom: 40px;
-    color: #333333; /* Darker color for good contrast on light background */
+    color: #333;
+    font-weight: bold; /* Bold for better visibility */
 }
 
 .project-cards {
@@ -18,56 +21,62 @@ h2 {
 }
 
 .project-card {
-    background: #ffffff; /* White background for the card */
-    border: 1px solid #ddd; /* Light border for definition */
+    background: #ffffff;
+    border: 1px solid #ddd;
     border-radius: 15px;
-    padding: 25px;
-    margin: 20px;
+    padding: 20px;
     width: 300px;
     text-align: left;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden; /* Prevent overflow of image */
 }
 
 .project-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); /* Slightly enhanced shadow on hover */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
-.project-card img {
+.project-image {
     max-width: 100%;
-    border-radius: 10px;
-    margin-bottom: 15px;
+    height: 180px; /* Fixed height for uniformity */
+    object-fit: cover; /* Ensures the image covers the space */
+    border-radius: 10px 10px 0 0; /* Rounded top corners */
+}
+
+.project-info {
+    padding: 15px; /* Space around text content */
 }
 
 .project-card h3 {
-    color: #333333; /* Darker color for readability */
+    color: #333;
     margin-bottom: 10px;
     font-size: 1.4rem;
+    font-weight: 600; /* Slightly bolder for emphasis */
 }
 
 .project-card p {
-    color: #666666; /* Medium gray for description text */
+    color: #666;
     margin-bottom: 15px;
     font-size: 0.95rem;
     line-height: 1.5;
 }
 
 .progress-bar {
-    background: #e9ecef; /* Light gray background for the progress bar */
+    background: #e9ecef;
     border-radius: 5px;
     margin: 10px 0;
-    overflow: hidden;
+    overflow: hidden; /* Prevent overflow of progress */
 }
 
 .progress {
-    background: #007bff; /* Consistent blue for all progress bars */
+    background: #007bff;
     height: 10px;
     border-radius: 5px;
 }
 
 .btn {
-    background: #007bff; /* Blue button color for contrast */
+    background: #007bff;
     color: white;
     padding: 12px 20px;
     text-decoration: none;
@@ -75,15 +84,22 @@ h2 {
     transition: background 0.3s ease, transform 0.2s ease;
     display: inline-block;
     font-weight: bold;
-    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3); /* Light shadow for depth */
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
 }
 
 .btn:hover {
-    background: #0056b3; /* Darker blue on hover */
+    background: #0056b3;
     transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(0, 123, 255, 0.4); /* Enhanced shadow on hover */
+    box-shadow: 0 6px 18px rgba(0, 123, 255, 0.4);
 }
 
+.loading {
+    font-size: 1.5rem;
+    color: #007bff;
+    font-weight: bold;
+}
+
+/* Responsive Styles */
 @media (max-width: 768px) {
     .project-cards {
         flex-direction: column;
@@ -103,84 +119,3 @@ h2 {
         text-align: center;
     }
 }
-
-
-
-
-
-
-
-/* .featured-projects {
-    padding: 60px 20px;
-    text-align: center;
-    background: #f8f9fa;
-}
-
-h2 {
-    font-size: 2.5rem;
-    margin-bottom: 40px;
-    color: #333;
-}
-
-.project-cards {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-}
-
-.project-card {
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 15px;
-    padding: 30px;
-    margin: 20px;
-    width: 320px;
-    text-align: left;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.project-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-}
-
-.project-card img {
-    max-width: 100%;
-    border-radius: 10px;
-    margin-bottom: 15px;
-}
-
-.project-card h3 {
-    margin-bottom: 10px;
-}
-
-.project-card p {
-    margin-bottom: 15px;
-}
-
-.progress-bar {
-    background: #f3f3f3;
-    border-radius: 5px;
-    margin: 10px 0;
-}
-
-.progress {
-    background: linear-gradient(90deg, #4CAF50, #81C784);
-    height: 10px;
-    border-radius: 5px;
-}
-
-.btn {
-    background: #007bff;
-    color: white;
-    padding: 12px 20px;
-    text-decoration: none;
-    border-radius: 25px;
-    transition: background 0.3s ease;
-    display: inline-block;
-}
-
-.btn:hover {
-    background: #0056b3;
-} */

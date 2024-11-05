@@ -1,4 +1,3 @@
-// src/components/ProjectDetail/ProjectDetail.jsx
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -43,7 +42,7 @@ const ProjectDetail = () => {
           setUserId(response.data._id);
         } catch (error) {
           console.error("Error fetching current user:", error);
-          navigate("/login"); // Navigate to login on error
+          navigate("/login");
         }
       };
       fetchCurrentUser();
@@ -108,7 +107,7 @@ const ProjectDetail = () => {
   const createdAtFormatted = formatDistanceToNow(new Date(project.createdAt), { addSuffix: true });
 
   return (
-    <Card className="project-detail">
+    <Card className="project-detail" elevation={4}>
       <CardContent>
         <Typography variant="h4" component="h1" gutterBottom>
           {project.name}
@@ -127,7 +126,7 @@ const ProjectDetail = () => {
           <Typography variant="subtitle1">Created {createdAtFormatted}</Typography>
           <Typography variant="body2">Required Amount: ${project.requiredAmount}</Typography>
           <Typography variant="body2">Current Funding: ${project.currentAmount}</Typography>
-          <LinearProgress variant="determinate" value={progress} sx={{ margin: '10px 0' }} />
+          <LinearProgress variant="determinate" value={progress} sx={{ margin: '10px 0', height: '10px', borderRadius: '5px' }} />
           <Typography variant="body2">{progress.toFixed(2)}% funded</Typography>
         </Box>
 
@@ -135,7 +134,7 @@ const ProjectDetail = () => {
           <Typography variant="h6">Funders</Typography>
           <List>
             {project.funders?.map((funder) => (
-              <ListItem key={funder._id}>
+              <ListItem key={funder._id} className="list-item">
                 <ListItemText primary={funder.username} />
               </ListItem>
             )) || <Typography>No funders yet.</Typography>}
@@ -146,7 +145,7 @@ const ProjectDetail = () => {
           <Typography variant="h6">Official Documentation</Typography>
           <List>
             {project.documentation.map((doc, index) => (
-              <ListItem key={index}>
+              <ListItem key={index} className="list-item">
                 <ListItemText
                   primary={
                     <a
@@ -166,10 +165,10 @@ const ProjectDetail = () => {
 
         {isCreator && (
           <Box className="project-actions" display="flex" justifyContent="space-between" marginTop={2}>
-            <Button variant="contained" color="primary" onClick={() => navigate(`/projects/${id}/edit`)}>
+            <Button variant="contained" color="primary" onClick={() => navigate(`/projects/${id}/edit`)} className="action-button">
               Edit
             </Button>
-            <Button variant="contained" color="secondary" onClick={openDeleteDialog}>
+            <Button variant="contained" color="secondary" onClick={openDeleteDialog} className="action-button">
               Delete
             </Button>
           </Box>

@@ -6,10 +6,12 @@ import FeaturedProject from "../components/FeaturedProject/FeaturedProject";
 import HowItWorks from "../components/HowItWorks/HowItWorks";
 import PlatformFeatures from "../components/PlatFormFeatures/PlatformFeatures";
 import Footer from "../components/Footer/Footer";
+import AboutUs from "../components/AboutUs/AboutUs";
 const LandingPage = () => {
   return (
     <div>
       <HeroSection />
+      <AboutUs />
       <FeaturedProject />
       <HowItWorks />
       <PlatformFeatures />

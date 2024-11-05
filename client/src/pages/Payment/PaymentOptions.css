@@ -1,39 +1,39 @@
+/* PaymentOptions.css */
 .payment-options {
-    max-width: 600px;
-    margin: 20px auto;
-    margin-bottom: 40px;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    background-color: #f9f9f9;
-  }
-  
-  .payment-method-buttons {
-    margin-top: 75px;
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 50px;
-  }
-  
-  .payment-method-button {
-    flex: 1;
-    padding: 10px;
-    margin: 0 5px;
-    border: 1px solid #007bff;
-    border-radius: 5px;
-    background-color: #fff;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-  
-  .payment-method-button.active,
-  .payment-method-button:hover {
-    background-color: #007bff;
-    color: white;
-  }
-  
-  #google-pay-button {
-    margin-top: 15px;
-  }
-  
+  max-width: 600px; /* Sets the maximum width of the payment options container */
+  margin: 20px auto; /* Centers the container horizontally */
+  margin-bottom: 40px; /* Space below the container */
+  padding: 20px; /* Inner spacing */
+  border: 1px solid #ccc; /* Border styling */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  background-color: #f9f9f9; /* Light background color */
+}
+
+.payment-method-buttons {
+  margin-top: 75px; /* Space above payment buttons */
+  display: flex; /* Flexbox layout for buttons */
+  justify-content: space-between; /* Space between buttons */
+  margin-bottom: 50px; /* Space below payment buttons */
+}
+
+.payment-method-button {
+  flex: 1; /* Each button takes equal space */
+  padding: 10px; /* Padding inside each button */
+  margin: 0 5px; /* Margin between buttons */
+  border: 1px solid #007bff; /* Blue border for each button */
+  border-radius: 5px; /* Rounded corners for buttons */
+  background-color: #fff; /* White background for buttons */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.payment-method-button.active,
+.payment-method-button:hover {
+  background-color: #007bff; /* Blue background on hover or when active */
+  color: white; /* White text on hover or when active */
+}
+
+#google-pay-button {
+  margin-top: 15px; /* Space above Google Pay button */
+}

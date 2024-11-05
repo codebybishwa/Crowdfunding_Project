@@ -1,10 +1,11 @@
-// src/main.jsx
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router } from "react-router-dom";
 import App from "./App";
 import { AuthContextProvider } from "./Context/AuthContext"; // Import the context provider
 import "./index.css"; // Global CSS
+import 'semantic-ui-css/semantic.min.css';
+import 'font-awesome/css/font-awesome.min.css';
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -15,23 +16,3 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     </AuthContextProvider>
   </React.StrictMode>
 );
-
-
-
-
-
-
-
-// import { StrictMode } from 'react'
-// import { createRoot } from 'react-dom/client'
-// import './index.css'
-// import App from './App.jsx'
-// import { BrowserRouter } from 'react-router-dom'
-
-// createRoot(document.getElementById('root')).render(
-//   <StrictMode>
-//     <BrowserRouter>
-//       <App />
-//     </BrowserRouter>
-//   </StrictMode>,
-// )

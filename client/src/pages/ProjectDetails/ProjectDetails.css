@@ -1,34 +1,68 @@
-/* src/pages/ProjectDetail.css */
 .project-detail {
   max-width: 800px;
   margin: auto;
   padding: 20px;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+.project-detail:hover {
+  transform: translateY(-5px);
 }
 
 .project-detail-image {
   border-radius: 8px;
+  margin-top: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
 }
 
 .project-description {
   margin-top: 10px;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   line-height: 1.6;
-  color: #555;
+  color: #444;
 }
 
 .project-info {
   margin-top: 20px;
 }
 
-.funders, .documentation {
+.funders,
+.documentation {
   margin-top: 20px;
 }
 
-.funders h3, .documentation h3 {
+.funders h6,
+.documentation h6 {
   font-size: 1.5rem;
   color: #333;
+  margin-bottom: 10px;
+}
+
+.list-item {
+  transition: background-color 0.2s ease-in-out;
+}
+
+.list-item:hover {
+  background-color: #f5f5f5;
+}
+
+.action-button {
+  flex-grow: 1;
+  margin-right: 10px;
+}
+
+.action-button:last-child {
+  margin-right: 0;
 }
 
 .project-actions {
-  margin-top: 20px; 
+  margin-top: 20px;
+}
+
+.fund-button {
+  margin-top: 20px;
+  width: 100%;
 }

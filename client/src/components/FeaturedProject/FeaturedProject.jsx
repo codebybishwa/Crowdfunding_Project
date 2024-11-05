@@ -12,15 +12,13 @@ const FeaturedProject = () => {
         const response = await axios.get('http://localhost:3000/projects');
         const sortedProjects = response.data
           .sort((a, b) => {
-            // Sort by currentAmount in ascending order
             if (a.currentAmount !== b.currentAmount) {
               return a.currentAmount - b.currentAmount;
             }
-            // If currentAmount is the same, sort by requiredAmount in descending order
             return b.requiredAmount - a.requiredAmount;
           })
-          .slice(0, 4); // Get the top 3-4 projects
-          
+          .slice(0, 4);
+        
         setProjects(sortedProjects);
       } catch (error) {
         console.error("Error fetching projects:", error);
@@ -33,7 +31,7 @@ const FeaturedProject = () => {
   }, []);
 
   if (loading) {
-    return <div>Loading featured projects...</div>;
+    return <div className="loading">Loading featured projects...</div>;
   }
 
   return (
@@ -42,13 +40,15 @@ const FeaturedProject = () => {
       <div className="project-cards">
         {projects.map(project => (
           <div key={project._id} className="project-card">
-            <img src={project.image} alt={project.name} />
-            <h3>{project.name}</h3>
-            <p>{project.description}</p>
-            <div className="progress-bar">
-              <div className="progress" style={{ width: `${(project.currentAmount / project.requiredAmount) * 100}%` }}></div>
+            <img src={project.image} alt={project.name} className="project-image" />
+            <div className="project-info">
+              <h3>{project.name}</h3>
+              <p>{project.description}</p>
+              <div className="progress-bar">
+                <div className="progress" style={{ width: `${(project.currentAmount / project.requiredAmount) * 100}%` }}></div>
+              </div>
+              <a href={`/projects/${project._id}`} className="btn">Support This Project</a>
             </div>
-            <a href={`/projects/${project._id}`} className="btn">Support This Project</a>
           </div>
         ))}
       </div>

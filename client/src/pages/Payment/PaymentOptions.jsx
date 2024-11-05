@@ -9,12 +9,12 @@ import { Container, Typography, Grid, Box, Paper } from "@mui/material";
 import { Payment, Google, MonetizationOn } from "@mui/icons-material"; 
 import "./PaymentOptions.css";
 
-const stripePromise = loadStripe("YOUR_STRIPE_PUBLIC_KEY");
+const stripePromise = loadStripe("YOUR_STRIPE_PUBLIC_KEY"); // Replace with your actual Stripe public key
 
 const PaymentOptions = () => {
   const { id } = useParams(); 
   const navigate = useNavigate();
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null); // State to manage selected payment method
 
   return (
     <Container maxWidth="sm" className="payment-options">
@@ -22,6 +22,7 @@ const PaymentOptions = () => {
         Select a Payment Method
       </Typography>
       <Grid container spacing={2} className="payment-method-buttons">
+        {/* Stripe Payment Method */}
         <Grid item xs={4}>
           <Paper
             elevation={3}
@@ -33,6 +34,8 @@ const PaymentOptions = () => {
             <Typography variant="h6">Pay with Card (Stripe)</Typography>
           </Paper>
         </Grid>
+
+        {/* Google Pay Method */}
         <Grid item xs={4}>
           <Paper
             elevation={3}
@@ -44,6 +47,8 @@ const PaymentOptions = () => {
             <Typography variant="h6">Pay with Google Pay (UPI)</Typography>
           </Paper>
         </Grid>
+
+        {/* Crypto Payment Method */}
         <Grid item xs={4}>
           <Paper
             elevation={3}

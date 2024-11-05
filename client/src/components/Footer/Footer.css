@@ -21,7 +21,7 @@ body > #root > div {
 
 /* Footer styling */
 .site-footer {
-    background: linear-gradient(135deg, #2c3e50, #1c2833);
+    background: linear-gradient(135deg, black, #1c2833);
     color: #ecf0f1;
     padding: 50px 20px;
     text-align: center;
@@ -100,3 +100,16 @@ body > #root > div {
         margin: 0 20px;
     }
 }
+
+.site-footer-social a {
+    margin: 0 15px;
+    color: #bdc3c7;
+    font-size: 1.5rem; /* Adjust icon size */
+    transition: color 0.3s ease;
+}
+
+.site-footer-social a:hover {
+    color: #4a90e2; /* Change color on hover */
+}
+
+

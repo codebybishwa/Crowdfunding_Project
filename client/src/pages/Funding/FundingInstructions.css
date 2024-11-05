@@ -2,3 +2,16 @@
     margin: 20px auto; /* Center the container */
     padding: 20px; /* Add some padding */
 }
+
+.funding-instructions .MuiButton-contained {
+    transition: background-color 0.3s ease;
+}
+
+.funding-instructions .MuiButton-contained:hover {
+    background-color: #0056b3; /* Darken the primary color on hover */
+}
+
+.MuiTypography-h6 {
+    font-weight: 600; /* Make step titles bolder */
+    color: #333; /* Darker color for better contrast */
+}

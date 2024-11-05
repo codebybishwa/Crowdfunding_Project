@@ -1,5 +1,6 @@
 import React from 'react';
 import './Footer.css'; // Import the CSS file
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 const Footer = () => {
     return (
@@ -18,9 +19,18 @@ const Footer = () => {
                 </nav>
                 <div className="site-footer-social">
                     <h3 className="site-footer-title">Follow Us</h3>
-                    <a href="#" aria-label="Instagram">Instagram</a>
-                    <a href="#" aria-label="LinkedIn">LinkedIn</a>
-                    <a href="#" aria-label="Twitter">Twitter</a>
+                    <a href="#" aria-label="Instagram">
+                        <i className="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" aria-label="LinkedIn">
+                        <i className="fab fa-linkedin"></i>
+                    </a>
+                    <a href="#" aria-label="Twitter">
+                        <i className="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" aria-label="Meta (Facebook)">
+                        <i className="fab fa-facebook-f"></i>
+                    </a>
                 </div>
             </div>
             <div className="site-footer-bottom">

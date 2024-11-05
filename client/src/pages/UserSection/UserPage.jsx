@@ -37,7 +37,7 @@ const UserPage = () => {
   }, []);
 
   if (!user) {
-    return <div>Loading user data...</div>;
+    return <div className="loading">Loading user data...</div>;
   }
 
   return (
@@ -50,7 +50,7 @@ const UserPage = () => {
           className="edit-button"
           onClick={() => navigate("/profile/edit")}
         >
-          Edit
+          Edit Profile
         </button>
       </div>
 
@@ -73,7 +73,6 @@ const UserPage = () => {
                   </p>
                   <p>
                     <strong>Funders:</strong> {project.funders.map(funder => funder.username).join(", ")}
-                    {/* {console.log(project.funders)} */}
                   </p>
                   <Link
                     to={`/projects/${project._id}`}
