@@ -30,16 +30,30 @@ app.get('/', async (req, res) => {
 
 app.get('/profile', authenticateToken, async (req, res) => {
   try {
-    const user = await User.findById(req.user.id) // Populate the projects field
-      .populate('createdProjects')  // Populate the createdProjects field
-      .populate('donatedProjects');  // Populate the donatedProjects field
+    const user = await User.findById(req.user.id)
+      .populate({
+        path: 'createdProjects',
+        populate: {
+          path: 'funders',
+          model: 'User'
+        }
+      })
+      .populate({
+        path: 'donatedProjects',
+        populate: {
+          path: 'funders',
+          model: 'User'
+        }
+      });
+
     if (!user) return res.sendStatus(404);
-    res.json(user); // Send user data
+    res.json(user);
   } catch (error) {
     console.error("Error fetching user data:", error);
     res.sendStatus(500);
   }
 });
+
 
 app.put('/profile', authenticateToken, async (req, res) => {
   try {

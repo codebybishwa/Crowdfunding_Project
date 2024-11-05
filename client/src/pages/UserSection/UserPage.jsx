@@ -72,7 +72,8 @@ const UserPage = () => {
                     {project.requiredAmount}
                   </p>
                   <p>
-                    <strong>Funders:</strong> {project.funders.join(", ")}
+                    <strong>Funders:</strong> {project.funders.map(funder => funder.username).join(", ")}
+                    {/* {console.log(project.funders)} */}
                   </p>
                   <Link
                     to={`/projects/${project._id}`}
@@ -107,7 +108,7 @@ const UserPage = () => {
                     {project.requiredAmount}
                   </p>
                   <p>
-                    <strong>Funders:</strong> {project.funders.join(", ")}
+                    <strong>Funders:</strong> {project.funders.map(funder => funder.username).join(", ")}
                   </p>
                   <Link
                     to={`/projects/${project._id}`}
