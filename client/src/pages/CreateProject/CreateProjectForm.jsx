@@ -24,17 +24,24 @@ const CreateProjectForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.post('http://localhost:3000/projects', formData, {
+  
+      // Fallback image URL if the user hasn't provided one
+      const projectData = {
+        ...formData,
+        image: formData.image || "https://via.placeholder.com/300"
+      };
+  
+      const response = await axios.post('http://localhost:3000/projects', projectData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
+  
       console.log('Project created successfully:', response.data);
       alert('Project created successfully!');
-      // Redirect or clear form after submission
       setFormData({
         name: '',
         description: '',
@@ -48,6 +55,7 @@ const CreateProjectForm = () => {
       alert('Failed to create project. Please try again.');
     }
   };
+  
 
   return (
     <div className="create-project-form-container">
