@@ -9,7 +9,7 @@ Check out UnityFund in action here: [UnityFund](link)
 ## Project Overview
 <b>UnityFund</b> allows users to set up, verify, and fund impactful projects. Our platform prioritizes security and authenticity, requiring both project creators and backers to authenticate before participating. Projects undergo a verification process involving an AI model (soon to be implemented) that assesses feasibility, with the potential for manual review to further ensure the project's integrity.
 
-Once a project is approved, it’s displayed with comprehensive details and supporting documents for public viewing, making it easy for backers to make informed decisions. Multiple payment methods, including Google Pay, Stripe, and cryptocurrency, make it convenient to support projects from around the globe.
+Once a project is approved, it’s displayed with comprehensive details and supporting documents for public viewing, making it easy for backers to make informed decisions. UnityFund supports multiple payment methods, including Google Pay, Stripe, and cryptocurrency options, ensuring convenience for global users and catering to blockchain enthusiasts through Web3 integration.
 
 
 ## User-Friendly Interface
@@ -28,6 +28,9 @@ The platform is designed with a clean, intuitive, and responsive UI using React 
 - Frontend:  JavaScript, React, Material UI
 - Backend:  Node.js, Express, MongoDB
 - Web3 Integration:  Cryptocurrency and blockchain-based transactions
+      - Smart Contract: Solidity
+      - Development & Testing: Hardhat
+      - Libraries: Ethers.js for Ethereum blockchain interaction
 - Payment Processing:  Google Pay, Stripe, Crypto Wallets
 - Machine Learning (Upcoming):  AI model for project feasibility analysis
   
@@ -57,6 +60,10 @@ This project was made possible through the combined efforts of:
 
 To set up and start UnityFund on your local machine, follow these steps.
 
+#### Prerequisites
+<b>MetaMask:</b>  You should have MetaMask installed in your browser to enable crypto transfers on the platform. MetaMask will act as your Web3 wallet, allowing you to connect to Ethereum or other supported networks. [Get MetaMask here](https://metamask.io/
+).
+
 ### 1. Clone the Repository
 Open your terminal and clone the repository by running:
 ```bash
@@ -69,24 +76,58 @@ You need **npm** installed on your system to manage dependencies. If npm is not 
 
 To install all dependencies, run:
 ```bash
+cd client
 npm install
+cd ..
+
+cd server
+npm install
+cd ..
+
+cd web
+npm install
+cd ..
 ```
 
-### 3. Start the Server
+### 3. Set Up Environment Variables
+Create a ```.env``` file in the root directory and add the following environment variables:
+  - <b>Database Configuration:</b>  MongoDB connection URI.
+  - <b>Payment API Keys:</b>  API keys for Stripe and Google Pay.
+  - <b>Web3 Details:</b>
+      - API key from a blockchain provider, such as Infura or Alchemy, for blockchain connections.
+      - Private key from a MetaMask account for deploying contracts and performing transactions.
+  - <b>JWT Secret:</b>  Secret key for generating and verifying JSON Web Tokens.
+Make sure to keep this file secure in a ```.gitignore``` file and never commit it to version control.
+
+### 4. Deploy Smart Contract (Web3)
+To deploy the smart contract, first set up Hardhat:
+  - Compile and deploy the Solidity contract:
+    ```bash
+    cd web
+    npx hardhat compile
+    npx hardhat run scripts/deploy.js --network <network_name>
+    ```
+    Replace ```<network_name>``` with the actual network (e.g., rinkeby, sepolia, mainnet) you're using and add the respective network in ```hardhat.config.cjs``` file
+  - Store ABI File:
+    After deploying the contract, ensure the ABI (contract’s Application Binary Interface) is available for frontend interaction. Store the generated ABI JSON file in       ```src/CrowdFundingJson``` for easy access.
+  - Use Contract Address in Frontend:
+    In ```src/pages/Payment/CryptoPaymentButton.jsx```, directly reference the contract address. This setup allows your React components to interact with the deployed contract via Web3 or Ethers.js, using the imported ABI and contract address.
+    
+### 5. Start the Server
 Navigate to the server directory and start the backend server:
 ```bash
 cd server
 node index.js
 ```
 
-### 4. Start the Frontend
+### 6. Start the Frontend
 In a new terminal window, navigate to the client directory and start the frontend development server:
 ```bash
 cd client
 npm run dev
 ```
 
-### 5. Access the Application
+### 7. Access the Application
 After both servers are running, open your browser and go to `http://localhost:3000` (or the configured port) to view the UnityFund application.
 
 
@@ -94,3 +135,7 @@ After both servers are running, open your browser and go to `http://localhost:30
 - AI-driven Feasibility Analysis: A machine learning model to assess the viability and impact of each project before approval.
 - Enhanced Security: Strengthening authentication and verification processes for both creators and backers.
 - Additional Payment Methods: Expanding options to support even more global payment systems.
+
+
+## 📜 License
+This project is licensed under the MIT License.
