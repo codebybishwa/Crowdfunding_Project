@@ -1,7 +1,7 @@
 import React from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import axios from "axios";
-
+import BASE_URL from "../../config";
 const CheckoutForm = ({ projectId, onSuccess }) => {
   const stripe = useStripe();
   const elements = useElements();
@@ -15,7 +15,7 @@ const CheckoutForm = ({ projectId, onSuccess }) => {
     e.preventDefault();
     const cardElement = elements.getElement(CardElement);
 
-    const { data } = await axios.post("http://localhost:3000/create-payment-intent", {
+    const { data } = await axios.post(`${BASE_URL}/create-payment-intent`, {
         projectId,
         amount: 1000, 
       });
@@ -38,7 +38,7 @@ const CheckoutForm = ({ projectId, onSuccess }) => {
       }
 
     if (!error) {
-      await axios.post(`http://localhost:3000/projects/${projectId}/fund`, {
+      await axios.post(`${BASE_URL}/projects/${projectId}/fund`, {
         paymentIntentId: paymentIntent.id,
         amount: paymentIntent.amount,
       });

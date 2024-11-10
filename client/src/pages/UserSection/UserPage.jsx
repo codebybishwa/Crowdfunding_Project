@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./UserPage.css";
+import BASE_URL from "../../config";
 
 const UserPage = () => {
   const [user, setUser] = useState(null);
@@ -21,7 +22,7 @@ const UserPage = () => {
     const fetchUserData = async () => {
       try {
         const token = localStorage.getItem("token");
-        const userResponse = await axios.get(`http://localhost:3000/profile`, {
+        const userResponse = await axios.get(`${BASE_URL}/profile`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         const userData = userResponse.data;

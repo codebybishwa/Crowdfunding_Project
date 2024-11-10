@@ -4,6 +4,7 @@ import { ethers } from "ethers";
 import axios from "axios";
 import { default as jwt_decode } from "jwt-decode";
 import abi from "../../CrowdFundingJson/CrowdFunding.json";
+import BASE_URL from "../../config";
 
 const CryptoPaymentButton = ({ projectId, onSuccess }) => {
   const [showPopup, setShowPopup] = useState(false);
@@ -77,7 +78,7 @@ const CryptoPaymentButton = ({ projectId, onSuccess }) => {
 
       // Send the transaction information to the backend
       const response = await axios.put(
-        `http://localhost:3000/projects/${projectId}/contribute`,
+        `${BASE_URL}/projects/${projectId}/contribute`,
         {
           amount: usdAmountLogged || usdEquivalent,
           userId : contributorId,

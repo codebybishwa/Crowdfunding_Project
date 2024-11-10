@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './ProjectDetailsEdit.css';
+import BASE_URL from '../../config';
 
 const ProjectDetailEdit = () => {
   const { id } = useParams();
@@ -28,7 +29,7 @@ const ProjectDetailEdit = () => {
     const fetchProject = async () => {
       const token = localStorage.getItem('token');
       try {
-        const response = await axios.get(`http://localhost:3000/projects/${id}`, {
+        const response = await axios.get(`${BASE_URL}/projects/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -66,7 +67,7 @@ const ProjectDetailEdit = () => {
     const token = localStorage.getItem('token');
 
     try {
-      await axios.put(`http://localhost:3000/projects/${id}`, projectDetails, {
+      await axios.put(`${BASE_URL}/projects/${id}`, projectDetails, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

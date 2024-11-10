@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './CreateProjectForm.css';
+import BASE_URL from '../../config';
 
 const CreateProjectForm = () => {
   const [formData, setFormData] = useState({
@@ -34,7 +35,7 @@ const CreateProjectForm = () => {
         image: formData.image || "https://via.placeholder.com/300"
       };
   
-      const response = await axios.post('http://localhost:3000/projects', projectData, {
+      const response = await axios.post(`${BASE_URL}/projects`, projectData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

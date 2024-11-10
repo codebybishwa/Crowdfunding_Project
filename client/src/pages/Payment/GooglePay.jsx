@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import GoogleIcon from '@mui/icons-material/Google';
 import PaymentIcon from '@mui/icons-material/Payment';
 import axios from 'axios'; // Ensure axios is installed and imported
+import BASE_URL from "../../config";
 
 const mockUsers = [
   { name: "User 1", upiId: "user1@upi", pin: "1234" },
@@ -86,7 +87,7 @@ const GooglePayButton = ({ projectId, onSuccess }) => {
         // Retrieve the token (example shown, adjust according to your implementation)
         const token = localStorage.getItem('token'); // Ensure the token is stored in localStorage after login
 
-        const response = await axios.post(`http://localhost:3000/projects/${projectId}`, 
+        const response = await axios.post(`${BASE_URL}/projects/${projectId}`, 
           { amount: amountInNumber },
           {
             headers: {

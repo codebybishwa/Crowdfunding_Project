@@ -2,6 +2,7 @@ import { useState } from "react"; // Import useState to manage component state
 import { Link, useNavigate } from "react-router-dom"; // Import Link and useNavigate
 import axios from "axios"; // Import axios for making HTTP requests
 import './Login.css'; // Import the CSS file
+import BASE_URL from "../../config";
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" }); // State for form data
@@ -21,7 +22,7 @@ const Login = () => {
 
     try {
       // Send login request to the backend
-      const response = await axios.post("http://localhost:3000/login", formData);
+      const response = await axios.post(`${BASE_URL}/login`, formData);
       // Save the received token in localStorage
       localStorage.setItem("token", response.data.token);
 

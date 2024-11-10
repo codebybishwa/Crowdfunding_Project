@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './FeaturedProject.css';
+import BASE_URL from '../../config';
 
 const FeaturedProject = () => {
   const [projects, setProjects] = useState([]);
@@ -9,7 +10,7 @@ const FeaturedProject = () => {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/projects');
+        const response = await axios.get(`${BASE_URL}/projects`);
         const sortedProjects = response.data
           .sort((a, b) => {
             if (a.currentAmount !== b.currentAmount) {

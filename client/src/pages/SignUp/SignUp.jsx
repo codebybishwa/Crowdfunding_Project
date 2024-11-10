@@ -153,6 +153,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./SignUp.css";
+import BASE_URL from "../../config";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -183,13 +184,13 @@ const SignUp = () => {
         return;
     }
     try {
-      const response = await axios.post("http://localhost:3000/register", formData);
+      const response = await axios.post(`${BASE_URL}/register`, formData);
       // Set success message or redirect user to login page
       setSuccess(true);
       console.log("User signed up:", response.data);
 
       // Now, log in the user immediately after signup
-      const loginResponse = await axios.post("http://localhost:3000/login", {
+      const loginResponse = await axios.post(`${BASE_URL}/login`, {
         email: formData.email,
         password: formData.password,
       });

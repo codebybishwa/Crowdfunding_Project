@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './ProfileEditForm.css';
 import { useNavigate } from 'react-router-dom';
+import BASE_URL from '../../config';
 
 const ProfileEditForm = () => {
   const [formData, setFormData] = useState({
@@ -18,7 +19,7 @@ const ProfileEditForm = () => {
     const fetchUserData = async () => {
       try {
         const token = localStorage.getItem('token'); // Get token from local storage
-        const response = await axios.get("http://localhost:3000/profile", {
+        const response = await axios.get(`${BASE_URL}/profile`, {
           headers: { Authorization: `Bearer ${token}` }, // Add token in headers
         });
         setFormData(response.data);
@@ -42,7 +43,7 @@ const ProfileEditForm = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token'); // Get token from local storage
-      await axios.put("http://localhost:3000/profile", formData, {
+      await axios.put(`${BASE_URL}/profile`, formData, {
         headers: { Authorization: `Bearer ${token}` }, // Add token in headers
       });
       alert("Profile updated successfully!");

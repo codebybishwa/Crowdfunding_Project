@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { formatDistanceToNow } from "date-fns";
+import BASE_URL from "../../config";
 import {
   Card,
   CardContent,
@@ -34,7 +35,7 @@ const ProjectDetail = () => {
     } else {
       const fetchCurrentUser = async () => {
         try {
-          const response = await axios.get("http://localhost:3000/profile", {
+          const response = await axios.get(`${BASE_URL}/profile`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -54,7 +55,7 @@ const ProjectDetail = () => {
       const token = localStorage.getItem("token");
 
       try {
-        const response = await axios.get(`http://localhost:3000/projects/${id}`, {
+        const response = await axios.get(`${BASE_URL}/projects/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -79,7 +80,7 @@ const ProjectDetail = () => {
     const token = localStorage.getItem("token");
 
     try {
-      await axios.delete(`http://localhost:3000/projects/${id}`, {
+      await axios.delete(`${BASE_URL}/projects/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

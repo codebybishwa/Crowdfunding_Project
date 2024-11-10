@@ -8,6 +8,7 @@ import CryptoPaymentButton from "./CryptoPaymentButton";
 import { Container, Typography, Grid, Box, Paper } from "@mui/material";
 import { Payment, Google, MonetizationOn } from "@mui/icons-material"; 
 import "./PaymentOptions.css";
+import BASE_URL from "../../config";
 
 const stripePromise = loadStripe("YOUR_STRIPE_PUBLIC_KEY"); // Replace with your actual Stripe public key
 

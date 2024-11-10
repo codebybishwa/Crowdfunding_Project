@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { formatDistanceToNow, parseISO } from "date-fns";
 import "./ProjectList.css";
+import BASE_URL from "../../config";
 
 const ProjectList = () => {
   const [projects, setProjects] = useState([]);
@@ -19,7 +20,7 @@ const ProjectList = () => {
     const fetchProjects = async () => {
       setLoading(true);
       try {
-        const response = await axios.get("http://localhost:3000/projects");
+        const response = await axios.get(`${BASE_URL}/projects`);
         setProjects(response.data);
       } catch (error) {
         console.error("Error fetching projects:", error);
