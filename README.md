@@ -28,9 +28,9 @@ The platform is designed with a clean, intuitive, and responsive UI using React 
 - <b>Frontend:</b>  JavaScript, React, Material UI
 - <b>Backend:</b>  Node.js, Express, MongoDB
 - <b>Web3 Integration:</b>  Cryptocurrency and blockchain-based transactions
-  - Smart Contract: Solidity
-  - Development & Testing: Hardhat
-  - Libraries: Ethers.js for Ethereum blockchain interaction
+  - <b>Smart Contract:</b>  Solidity
+  - <b>Development & Testing:</b>  Hardhat
+  - <b>Libraries:</b>  Ethers.js for Ethereum blockchain interaction
 - <b>Payment Processing:</b>  Google Pay, Stripe, Crypto Wallets
 - <b>Machine Learning (Upcoming):</b>  AI model for project feasibility analysis
   
