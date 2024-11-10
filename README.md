@@ -60,7 +60,7 @@ This project was made possible through the combined efforts of:
 
 To set up and start UnityFund on your local machine, follow these steps.
 
-#### Prerequisites
+### Prerequisites
 <b>MetaMask:</b>  You should have MetaMask installed in your browser to enable crypto transfers on the platform. MetaMask will act as your Web3 wallet, allowing you to connect to Ethereum or other supported networks. [Get MetaMask here](https://metamask.io/).
 
 ### 1. Clone the Repository
@@ -104,9 +104,11 @@ To deploy the smart contract, first set up Hardhat:
 
   - <b>Set up Hardhat for Contract Compilation and Deployment:</b>
     - First, navigate to the web directory where your Hardhat project is located.
-    - Compile and deploy the Solidity contract:
       ```bash
       cd web
+      ```
+    - Compile and deploy the Solidity contract:
+      ```bash
       npx hardhat compile
       npx hardhat run scripts/deploy.js --network <network_name>
       ```
