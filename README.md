@@ -63,6 +63,8 @@ To set up and start UnityFund on your local machine, follow these steps.
 ### Prerequisites
 <b>MetaMask:</b>  You should have MetaMask installed in your browser to enable crypto transfers on the platform. MetaMask will act as your Web3 wallet, allowing you to connect to Ethereum or other supported networks. [Get MetaMask here](https://metamask.io/).
 
+<b>npm:</b>  You need **npm** installed on your system to manage dependencies. If npm is not installed, install it from [Node.js](https://nodejs.org).
+
 ### 1. Clone the Repository
 Open your terminal and clone the repository by running:
 ```bash
@@ -71,7 +73,6 @@ cd Crowdfunding_Project
 ```
 
 ### 2. Install Dependencies
-You need **npm** installed on your system to manage dependencies. If npm is not installed, install it from [Node.js](https://nodejs.org).
 
 To install all dependencies, run:
 ```bash
