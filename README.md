@@ -95,7 +95,7 @@ Create a ```.env``` file in the root directory and add the following environment
   - <b>Payment API Keys:</b>  API keys for Stripe and Google Pay.
   - <b>Web3 Details:</b>
       - API key from a blockchain provider, such as Infura or Alchemy, for blockchain connections.
-      - Private key from a MetaMask account for deploying contracts and performing transactions.
+      - Private key from a MetaMask account for deploying contracts.
   - <b>JWT Secret:</b>  Secret key for generating and verifying JSON Web Tokens.
 
 Make sure to keep this file secure in a ```.gitignore``` file and never commit it to version control.
