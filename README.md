@@ -25,14 +25,14 @@ The platform is designed with a clean, intuitive, and responsive UI using React 
 - <b>Decentralized Funding Options:</b>  Web3 integration for blockchain enthusiasts to fund projects via crypto.
 
 ## ⚙️ Tech Stack
-- Frontend:  JavaScript, React, Material UI
-- Backend:  Node.js, Express, MongoDB
-- Web3 Integration:  Cryptocurrency and blockchain-based transactions
+- <b>Frontend:</b>  JavaScript, React, Material UI
+- <b>Backend:</b>  Node.js, Express, MongoDB
+- <b>Web3 Integration:</b>  Cryptocurrency and blockchain-based transactions
   - Smart Contract: Solidity
   - Development & Testing: Hardhat
   - Libraries: Ethers.js for Ethereum blockchain interaction
-- Payment Processing:  Google Pay, Stripe, Crypto Wallets
-- Machine Learning (Upcoming):  AI model for project feasibility analysis
+- <b>Payment Processing:</b>  Google Pay, Stripe, Crypto Wallets
+- <b>Machine Learning (Upcoming):</b>  AI model for project feasibility analysis
   
 ## Contributors
 This project was made possible through the combined efforts of:
@@ -61,8 +61,7 @@ This project was made possible through the combined efforts of:
 To set up and start UnityFund on your local machine, follow these steps.
 
 #### Prerequisites
-<b>MetaMask:</b>  You should have MetaMask installed in your browser to enable crypto transfers on the platform. MetaMask will act as your Web3 wallet, allowing you to connect to Ethereum or other supported networks. [Get MetaMask here](https://metamask.io/
-).
+<b>MetaMask:</b>  You should have MetaMask installed in your browser to enable crypto transfers on the platform. MetaMask will act as your Web3 wallet, allowing you to connect to Ethereum or other supported networks. [Get MetaMask here](https://metamask.io/).
 
 ### 1. Clone the Repository
 Open your terminal and clone the repository by running:
@@ -97,21 +96,29 @@ Create a ```.env``` file in the root directory and add the following environment
       - API key from a blockchain provider, such as Infura or Alchemy, for blockchain connections.
       - Private key from a MetaMask account for deploying contracts and performing transactions.
   - <b>JWT Secret:</b>  Secret key for generating and verifying JSON Web Tokens.
+
 Make sure to keep this file secure in a ```.gitignore``` file and never commit it to version control.
 
 ### 4. Deploy Smart Contract (Web3)
 To deploy the smart contract, first set up Hardhat:
-  - Compile and deploy the Solidity contract:
-    ```bash
-    cd web
-    npx hardhat compile
-    npx hardhat run scripts/deploy.js --network <network_name>
-    ```
-    Replace ```<network_name>``` with the actual network (e.g., rinkeby, sepolia, mainnet) you're using and add the respective network in ```hardhat.config.cjs``` file
-  - Store ABI File:
-    After deploying the contract, ensure the ABI (contract’s Application Binary Interface) is available for frontend interaction. Store the generated ABI JSON file in       ```src/CrowdFundingJson``` for easy access.
-  - Use Contract Address in Frontend:
-    In ```src/pages/Payment/CryptoPaymentButton.jsx```, directly reference the contract address. This setup allows your React components to interact with the deployed contract via Web3 or Ethers.js, using the imported ABI and contract address.
+
+  - <b>Set up Hardhat for Contract Compilation and Deployment:</b>
+    - First, navigate to the web directory where your Hardhat project is located.
+    - Compile and deploy the Solidity contract:
+      ```bash
+      cd web
+      npx hardhat compile
+      npx hardhat run scripts/deploy.js --network <network_name>
+      ```
+    - Replace ```<network_name>``` with the actual network (e.g., rinkeby, sepolia, mainnet) you're using and add the respective network in ```hardhat.config.cjs``` file
+    
+  - <b>Store the ABI File for Frontend Access:</b>
+    - After deploying the contract, locate the ABI (Application Binary Interface) JSON file in artifacts folder
+    - Place this file in the ```src/CrowdFundingJson``` folder for easy access in the frontend application.
+      
+  - <b>Reference the Contract Address in the Frontend:</b>
+    - In the frontend, go to ```src/pages/Payment/CryptoPaymentButton.jsx```.
+    - Directly reference the deployed contract’s address here. This setup allows your React components to interact with the contract via Web3 or Ethers.js.
     
 ### 5. Start the Server
 Navigate to the server directory and start the backend server:
