@@ -15,6 +15,15 @@ Once a project is approved, it’s displayed with comprehensive details and supp
 ## User-Friendly Interface
 The platform is designed with a clean, intuitive, and responsive UI using React and Material UI, providing users with an attractive and seamless experience. Our aim is to ensure that project creators and backers alike can navigate and use the platform with ease.
 
+![image](https://github.com/user-attachments/assets/b71fd479-25b9-44b3-b172-b3a78a53d45f)
+
+![image](https://github.com/user-attachments/assets/96db0ec7-447f-460d-b63c-bec875a21731)
+
+![image](https://github.com/user-attachments/assets/7f5fd445-2126-4f53-bcf3-a391f2728fee)
+
+
+
+
 
 
 ## 📚 Features
