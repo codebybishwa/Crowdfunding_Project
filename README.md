@@ -2,9 +2,6 @@
 
 UnityFund, an open-source crowdfunding platform built to empower innovative and noble projects by providing them with the necessary funding from the masses. It uses modern technology to connect project creators with potential backers and ensures a smooth, secure, and efficient fundraising experience for everyone involved.
 
-## 🌐 Live Demo
-Check out UnityFund in action here: [UnityFund](link)
-
 
 ## Project Overview
 <b>UnityFund</b> allows users to set up, verify, and fund impactful projects. Our platform prioritizes security and authenticity, requiring both project creators and backers to authenticate before participating. Projects undergo a verification process involving an AI model (soon to be implemented) that assesses feasibility, with the potential for manual review to further ensure the project's integrity.
